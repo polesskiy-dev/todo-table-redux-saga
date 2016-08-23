@@ -10,6 +10,10 @@ Server has 0.5s delay before response - to show spinner.
 Also, can randomly response with "500" status and error - to invoke saga actions: display error alerts.
 Alerts will be hide after 3s delay one by one.
 
+#### Used libs: 
+ES6, NodeJS, React, Redux, Webpack, Babel, LESS.
+immutable js, redux-saga, eslint, autoprefixer. 
+
 ## To see demo:
 
     $ git clone https://github.com/polesskiy-dev/todo-table-redux-saga

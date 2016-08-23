@@ -1,0 +1,23 @@
+# Redux Saga todo-list example
+
+### Allows to:
+* create simple todo item
+* save it in server RAM
+* fetch all todos and show them in table.
+
+### To illustrate async saga effects:
+Server has 0.5s delay before response - to show spinner.
+Also, can randomly response with "500" status and error - to invoke saga actions: display error alerts.
+Alerts will be hide after 3s delay one by one.
+
+## To see demo:
+
+    $ git clone https://github.com/polesskiy-dev/todo-table-redux-saga
+    $ cd todo-table-redux-saga    
+    $ npm install 
+    $ npm start
+        
+    
+
+    
+    

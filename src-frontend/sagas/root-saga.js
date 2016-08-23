@@ -36,19 +36,25 @@ import {call, put, fork} from 'redux-saga/effects'
 // }
 // saveSingleTodoSaga;
 
-function checkHttpStatus(res) {
-    if (!res.ok) {
-        throw "Error while fetching data";
-    }
-    return res;
-}
+const NOTIFICATION_TTL = 5000;
+
+/**
+ * Check http status.
+ *
+ * If not OK - resolve promise and throw server message text, else - return same response.
+ *
+ * @param res - server response
+ */
+const checkHttpStatus = (res) => (res.ok) ? res : res.text().then(err => {
+    throw err;
+});
 
 /**
  * POST new todo.
  *
  * @param action
  */
-function* postTodoSaga(action, sagaId¢) {
+function* postTodoSaga(action) {
     try {
         //dispatch that we will start request now
         yield put({type: types.DATA_PENDING_START});
@@ -74,23 +80,22 @@ function* postTodoSaga(action, sagaId¢) {
         yield put(todoActions.postTodoFailure(err.toString()));
 
         //show post todos error in notification
-        yield put(errorActions.showErrorNotification(sagaId, err.toString()));
+        yield put(errorActions.showErrorNotification(err.toString()));
 
         //dispatch that request finished
         yield put({type: types.DATA_PENDING_FINISHED});
 
         //hide notification after delay
-        yield delay(3000);
-        yield put(errorActions.hideErrorNotification(sagaId))
+        yield delay(NOTIFICATION_TTL);
+        yield put(errorActions.hideErrorNotification())
     }
 }
 
 /**
  * Fetch todos saga.
  *
- * @param sagaId - saga ID
  */
-function* fetchTodosSaga(sagaId) {
+function* fetchTodosSaga() {
     try {
         //dispatch that we will start request now
         yield put({type: types.DATA_PENDING_START});
@@ -112,14 +117,14 @@ function* fetchTodosSaga(sagaId) {
         yield put(todoActions.fetchTodosFailure(err.toString()));
 
         //show fetching todos error in notification
-        yield put(errorActions.showErrorNotification(sagaId, err.toString()));
+        yield put(errorActions.showErrorNotification(err.toString()));
 
         //dispatch that request finished
         yield put({type: types.DATA_PENDING_FINISHED});
 
         //hide notification after delay
-        yield delay(3000);
-        yield put(errorActions.hideErrorNotification(sagaId))
+        yield delay(NOTIFICATION_TTL);
+        yield put(errorActions.hideErrorNotification())
     }
 }
 
@@ -131,23 +136,11 @@ function* watchPostTodoStarted() {
 
 //create new function on every FETCH_TODOS_START action
 function* watchFetchTodoStarted() {
-    let sagaId = 0;
-    yield* takeEvery(types.FETCH_TODOS_START, ()=>fetchTodosSaga(sagaId++));
+    yield* takeEvery(types.FETCH_TODOS_START, fetchTodosSaga);
 }
 
 //fork to start watchers in parallel
 export default function* rootSaga() {
     yield fork(watchFetchTodoStarted);
     yield fork(watchPostTodoStarted);
-}
-
-
-
-const addAProperty = (obj) => {
-    return obj.A = 1;
-}
-
-
-const addAProperty = (obj) => {
-    return {...obj, A: 1};
 }

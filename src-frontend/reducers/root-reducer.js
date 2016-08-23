@@ -16,19 +16,15 @@ const rootReducer = (state = initialTodosState, action) => {
 
         /** fetch todos */
         case types.FETCH_TODOS_SUCCESS:
-            console.log("Todos obtained: %o", action.payload.todos);
             return state.set('todos', List(action.payload.todos.map((todo)=>Map(todo))));
         case types.FETCH_TODOS_FAILURE:
-            console.log("Todos fetch failed, error: %s", action.payload.err);
             return state;
 
         /** error message handle */
         case types.SHOW_ERROR_NOTIFICATION:
-            console.log("New error: %s", JSON.stringify(action.payload));
-            return state.update('errors', list=>list.push(action.payload));
+            return state.update('errors', list=>list.push(action.payload.message));
         case types.HIDE_ERROR_NOTIFICATION:
-            console.log("Deleting error: %d", action.payload.id);
-            return state.update('errors', list=>list.filterNot((error)=>error.id === action.payload.id));
+            return state.update('errors', list=>list.shift());
 
         /**data pending*/
         case types.DATA_PENDING_START:

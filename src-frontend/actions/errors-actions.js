@@ -1,20 +1,16 @@
 import * as types from '../constants/action-types'
 
-export const showErrorNotification = (id, message) =>{
+export const showErrorNotification = (message) => {
     return {
         type: types.SHOW_ERROR_NOTIFICATION,
         payload: {
-            id: id,
             message: message
         }
     }
 };
 
-export const hideErrorNotification = (id) =>{
+export const hideErrorNotification = () => {
     return {
-        type: types.HIDE_ERROR_NOTIFICATION,
-        payload: {
-            id: id
-        }
+        type: types.HIDE_ERROR_NOTIFICATION
     }
 };

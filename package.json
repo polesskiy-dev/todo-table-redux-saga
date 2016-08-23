@@ -9,6 +9,7 @@
   "dependencies": {
     "async": "^2.0.0-rc.6",
     "babel-polyfill": "^6.13.0",
+    "bluebird": "^3.4.1",
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
@@ -26,7 +27,7 @@
     "request": "^2.72.0",
     "serve-favicon": "~2.3.0",
     "transit-immutable-js": "^0.6.0",
-    "transit-js": "^0.8.846",
+    "transit-js": "^0.8.846"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",

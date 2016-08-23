@@ -7,6 +7,7 @@ import {createStore, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 import {Map, List} from 'immutable'
 import createSagaMiddleware from 'redux-saga'
+import createLogger from 'redux-logger'
 import App from './components/App'
 import reducer from './reducers/root-reducer'
 import rootSaga from './sagas/root-saga'
@@ -31,7 +32,7 @@ const initialState = Map({
 const sagaMiddleware = createSagaMiddleware();
 
 /* create store and init it by initial data, enhance by middleware*/
-const store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware));
+const store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware, createLogger()));
 
 sagaMiddleware.run(rootSaga);
 

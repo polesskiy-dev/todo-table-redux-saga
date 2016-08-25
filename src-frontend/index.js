@@ -1,6 +1,7 @@
 /**
  * Main store function
  */
+"use strict";
 import React from 'react'
 import {render} from 'react-dom'
 import {createStore, applyMiddleware} from 'redux'
@@ -33,6 +34,9 @@ const sagaMiddleware = createSagaMiddleware();
 
 /* create store and init it by initial data, enhance by middleware*/
 const store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware, createLogger()));
+
+//const promise = new Promise();
+//promise;
 
 sagaMiddleware.run(rootSaga);
 

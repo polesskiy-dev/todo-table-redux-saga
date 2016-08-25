@@ -3,10 +3,9 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    entry: [
-        // Set up an ES6-ish environment
-        'babel-polyfill',
-        './src-frontend/index'],
+    entry: {
+        bundle: ['babel-polyfill', './src-frontend/index']
+    },
     output: {
         path: path.resolve('./public'),
         filename: 'js/bundle/bundle.js'
@@ -15,7 +14,7 @@ module.exports = {
         //Validate by ESLint before loading
         preLoaders: [
             {
-                test: /\.js$/,
+                test: /\.js|\.spec.js$/,
                 loaders: ['eslint']
             }
         ],
@@ -32,14 +31,12 @@ module.exports = {
             },
             //LESS
             {
-                test: /\.(less)$/,
-                loader: [
+                test: /\.(less|css)$/,
+                loader: ExtractTextPlugin.extract(
                     'style',
-                    //The query parameter importLoaders allow to configure which loaders should be applied to @imported resources.
-                    'css?modules&importLoaders=1&localIdentName=[name]---[local]---[hash:base64:5] ',
+                    'css?modules&importLoaders=1&localIdentName=[name]---[local]---[hash:base64:5]',
                     'autoprefixer',
-                    'less'
-                ].join('!')
+                    'less')
             }
         ]
     },

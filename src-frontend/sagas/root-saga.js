@@ -54,7 +54,7 @@ const checkHttpStatus = (res) => (res.ok) ? res : res.text().then(err => {
  *
  * @param action
  */
-function* postTodoSaga(action) {
+export function* postTodoSaga(action) {
     try {
         //dispatch that we will start request now
         yield put({type: types.DATA_PENDING_START});
@@ -95,7 +95,7 @@ function* postTodoSaga(action) {
  * Fetch todos saga.
  *
  */
-function* fetchTodosSaga() {
+export function* fetchTodosSaga() {
     try {
         //dispatch that we will start request now
         yield put({type: types.DATA_PENDING_START});

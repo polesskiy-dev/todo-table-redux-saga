@@ -4,14 +4,13 @@
   "private": true,
   "scripts": {
     "compile": "webpack --config webpack.config.js --progress --profile",
-    "prestart": "npm run compile",
+    "prestart": "npm test && npm run compile",
     "start": "node ./bin/www",
-    "test:single": "rm -rf tmp/ && karma start karma.conf.js --single-run --browsers PhantomJS"
+    "test": "ava --tap"
   },
   "dependencies": {
     "async": "^2.0.0-rc.6",
     "babel-polyfill": "^6.13.0",
-    "bluebird": "^3.4.1",
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
@@ -33,6 +32,7 @@
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
+    "ava": "^0.16.0",
     "babel-core": "^6.13.2",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.4",
@@ -42,19 +42,41 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.14.0",
-    "chai": "^3.5.0",
     "css-loader": "^0.23.1",
     "eslint": "^3.3.1",
     "eslint-loader": "^1.5.0",
+    "eslint-plugin-ava": "^3.0.0",
     "eslint-plugin-react": "^6.1.2",
     "expect": "^1.20.2",
     "extract-text-webpack-plugin": "^1.0.1",
-    "jasmine-core": "^2.4.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
-    "mocha": "^3.0.2",
-    "phantomjs-prebuilt": "^2.1.12",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0",
+      "react"
+    ],
+    "plugins": [
+      "transform-runtime"
+    ]
+  },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit",
+    "files": [
+      "src-frontend/**/*.spec.js"
+    ],
+    "source": [
+      "src-frontend/**/*.{js,jsx}"
+    ],
+    "concurrency": 5,
+    "failFast": true,
+    "tap": true
   }
 }

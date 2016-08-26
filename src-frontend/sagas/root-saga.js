@@ -6,36 +6,6 @@ import * as types from '../constants/action-types'
 import {takeEvery, delay} from 'redux-saga'
 import {call, put, fork} from 'redux-saga/effects'
 
-
-// const postTodo = (todo) => {
-//     return fetch(
-//         '/api/todos/',
-//         {
-//             method: 'POST',
-//             headers: {'Content-Type': 'application/json'},
-//             body: JSON.stringify(todo)
-//         }
-//     ).then(res=>res.json());
-// };
-
-
-//
-// function* saveSingleTodoSaga() {
-//     for (; ;) {
-//         // Wait for the action with appropriate type and payload.status, grab payload field value from action payload.
-//         const action = yield take((action)=>action.type === types.POST_TODO_REQ && action.payload.status === types.REQUEST.PENDING);
-//         try {
-//             const resp = yield postTodo(action.payload.todo);
-//             console.log("Resp for posting new todo: %o", resp);
-//         }
-//         catch
-//             (err) {
-//             console.error("Error while posting single todo to server: %s", err);
-//         }
-//     }
-// }
-// saveSingleTodoSaga;
-
 const NOTIFICATION_TTL = 5000;
 
 /**

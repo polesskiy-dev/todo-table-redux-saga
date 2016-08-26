@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-let counter = 0;
 let todos = [];
 
 /** Get all todos, randomly send Error or OK*/

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import Joi from 'joi-browser'
 import * as Actions from '../../../actions/todo-crud-actions'
 
 const mapDispatchToProps = (dispatch) => {
@@ -12,13 +13,32 @@ const mapDispatchToProps = (dispatch) => {
 
 @connect(null, mapDispatchToProps)
 export default class CreateTodoForm extends Component {
+    /**
+     * Validate input text.
+     *
+     * @param text
+     * @returns {boolean}
+     */
+    isValid = (text) => {
+        const schema = Joi.string().required();
+        return Joi.validate(text, schema).error ? false : true;
+    };
+
+    /**
+     * Handle submit event.
+     * Construcet new todo from form values.
+     *
+     * @param event
+     */
     handleSubmit = (event) => {
+        const DUMMY_TEXT = "Lorem ipsum";
         event.preventDefault();
 
         //construct todo from form fields
-        const newTodo = {};
-        newTodo.text = this.refs.textInput.value.trim();
-        newTodo.isDone = this.refs.isDoneCheckBox.checked;
+        const newTodo = {
+            text: this.isValid(this.refs.textInput.value.trim()) ? this.refs.textInput.value.trim() : DUMMY_TEXT,
+            isDone: false
+        };
 
         this.props.createNewTodoItem(newTodo);
     };
@@ -31,10 +51,6 @@ export default class CreateTodoForm extends Component {
                     <div className="form-group">
                         <label htmlFor="textInput">Text:</label>
                         <input ref="textInput" type="text" className="form-control"/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="isDoneCheckBox">Is done:</label>
-                        <input ref="isDoneCheckBox" type="checkbox"/>
                     </div>
                 </fieldset>
                 <button form="create-todo-form" type="submit" className="btn btn-default">

@@ -15,7 +15,7 @@ const TodoApp = () => {
 
         <article className="panel panel-default">
             <div className="panel-heading">
-                <p>Todos:</p>
+                <p>Todos list:</p>
             </div>
             <div className="panel-body">
                 <TodosTable/>

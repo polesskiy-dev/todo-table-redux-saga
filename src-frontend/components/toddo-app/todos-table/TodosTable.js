@@ -20,27 +20,23 @@ export default class TodosTable extends Component {
     render() {
         const todos = this.props.todos;
         return (
-            <table className="table table-stripped">
-                <thead>
-                <tr>
-                    <th>Text:</th>
-                    <th>Is done:</th>
-                </tr>
-                </thead>
-                <tfoot>
-                <tr>
-                    <td>
-                        <button onClick={this.props.fetchTodos} className="btn btn-default">
-                            <span className="glyphicon glyphicon-refresh"/>
-                            Manually update
-                        </button>
-                    </td>
-                </tr>
-                </tfoot>
-                <tbody>
-                {todos.map((todo, index) => <TodoRow key={index} todo={todo.toObject()}/>)}
-                </tbody>
-            </table>
+            <div>
+                <table className="table table-stripped">
+                    <thead>
+                        <tr>
+                            <th>Text:</th>
+                            <th>Is done:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {todos.map((todo, index) => <TodoRow key={index} todo={todo.toObject()}/>)}
+                    </tbody>
+                </table>
+                <button onClick={this.props.fetchTodos} className="btn btn-default">
+                    <span className="glyphicon glyphicon-refresh"/>
+                    Manually update
+                </button>
+            </div>
         )
     }
 }

@@ -8,7 +8,7 @@ module.exports = {
     },
     output: {
         path: path.resolve('./public'),
-        filename: 'js/bundle/bundle.js'
+        filename: 'js/bundle/[name].js'
     },
     module: {
         //Validate by ESLint before loading
@@ -43,6 +43,7 @@ module.exports = {
 
     plugins: [
         new webpack.NoErrorsPlugin(),
+        // new webpack.optimize.UglifyJsPlugin(),
         //Extract css to file
         new ExtractTextPlugin('stylesheets/bundle/bundle.css')
     ],

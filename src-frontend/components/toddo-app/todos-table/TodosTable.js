@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux';
-import * as Actions from '../../actions/todo-crud-actions'
+import * as Actions from '../../../actions/todo-crud-actions'
 import TodoRow from './todo-row/TodoRow'
-//import styles from './TodosTable.less'
 
 const mapStateToProps = (state) => {
     return {

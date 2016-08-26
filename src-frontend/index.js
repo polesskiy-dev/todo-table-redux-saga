@@ -4,25 +4,18 @@
 "use strict";
 import React from 'react'
 import {render} from 'react-dom'
+import {Router, Route, IndexRoute, hashHistory} from 'react-router'
 import {createStore, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 import {Map, List} from 'immutable'
 import createSagaMiddleware from 'redux-saga'
 import createLogger from 'redux-logger'
-import App from './components/App'
 import reducer from './reducers/root-reducer'
 import rootSaga from './sagas/root-saga'
 
-// const DUMMY_TODOS = List([
-//     Map({
-//         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-//         isDone: true
-//     }),
-//     Map({
-//         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-//         isDone: false
-//     }),
-// ]);
+import App from './components/App'
+import TodoApp from './components/toddo-app/TodoApp'
+import About from './components/about/About'
 
 const initialState = Map({
     'todos': List([]),
@@ -40,7 +33,14 @@ sagaMiddleware.run(rootSaga);
 render(
 //Provider allows us to receive data from store of our app (by connect function)
     <Provider store={store}>
-        <App/>
+        <Router history={hashHistory}>
+            <Route path='/' component={App}>
+                <IndexRoute component={TodoApp}/>
+                <Route path='todo-app' component={TodoApp}/>
+                <Route path='about' component={About}/>
+            </Route>
+        </Router>
     </Provider>,
     document.getElementById('app-root')
 );
+

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "compile": "webpack --config webpack.config.js --progress --profile",
-    "prestart": "npm test && npm run compile",
+    "prestart": "npm run compile",
     "start": "node ./bin/www",
     "test": "ava --tap"
   },
@@ -22,6 +22,7 @@
     "react-dom": "^15.3.0",
     "react-immutable-proptypes": "^2.1.0",
     "react-redux": "^4.4.5",
+    "react-router": "^2.7.0",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "redux-saga": "^0.11.0",

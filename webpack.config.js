@@ -21,7 +21,7 @@ module.exports = {
         loaders: [
             //Compile ES6/7 to ES5 via babel
             {
-                test: /\.js$/,
+                test: /\.(js)$/,
                 loader: ['babel-loader'],
                 exclude: /node_modules/,
                 query: {

@@ -1,4 +1,4 @@
-# Redux Saga todo-list example
+# Redux Saga todo-list example [![Build Status](https://travis-ci.org/polesskiy-dev/todo-table-redux-saga.svg?branch=master)](https://travis-ci.org/polesskiy-dev/todo-table-redux-saga)
 
 ### Allows to:
 * create simple todo item

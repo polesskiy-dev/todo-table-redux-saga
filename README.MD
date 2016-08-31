@@ -14,7 +14,7 @@ Alerts will be hide after 3s delay one by one.
 ES6, NodeJS, React, Redux, Webpack, Babel, LESS.
 immutable js, redux-saga, eslint, autoprefixer. 
 
-## To see demo:
+## Local install:
 
     $ git clone https://github.com/polesskiy-dev/todo-table-redux-saga
     $ cd todo-table-redux-saga    

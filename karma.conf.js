@@ -23,11 +23,17 @@ module.exports = function (config) {
 
         //webpackConfig
         webpack: {
-            module:{
+            devtool: webpackConfig.devtool,
+            module: {
                 loaders: webpackConfig.module.loaders
             },
             plugins: webpackConfig.plugins,
-            resolve:webpackConfig.resolve
+            resolve: webpackConfig.resolve,
+            externals: {
+                'react/addons': true,
+                'react/lib/ExecutionEnvironment': true,
+                'react/lib/ReactContext': true
+            }
         },
 
         //hide info about bundling

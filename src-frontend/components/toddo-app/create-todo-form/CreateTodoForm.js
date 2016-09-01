@@ -19,10 +19,7 @@ export default class CreateTodoForm extends Component {
      * @param text
      * @returns {boolean}
      */
-    isValid = (text) => {
-        const schema = Joi.string().required();
-        return Joi.validate(text, schema).error ? false : true;
-    };
+    isValidText = (text) => Joi.validate(text, Joi.string().required()).error ? false : true;
 
     /**
      * Handle submit event.
@@ -36,7 +33,7 @@ export default class CreateTodoForm extends Component {
 
         //construct todo from form fields
         const newTodo = {
-            text: this.isValid(this.refs.textInput.value.trim()) ? this.refs.textInput.value.trim() : DUMMY_TEXT,
+            text: this.isValidText(this.refs.textInput.value.trim()) ? this.refs.textInput.value.trim() : DUMMY_TEXT,
             isDone: false
         };
 

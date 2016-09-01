@@ -1,5 +1,6 @@
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
+// import {shallow, mount} from 'enzyme'
 import {Map, List} from 'immutable'
 import chai from 'chai'
 import configureStore from 'redux-mock-store'

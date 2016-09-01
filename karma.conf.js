@@ -18,7 +18,6 @@ module.exports = function (config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             'src-frontend/**/*.spec.js': ['webpack'],
-            // 'src-frontend/**/*.js': ['webpack']
         },
 
         //webpackConfig
@@ -48,6 +47,6 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'PhantomJS'/*, 'ChromeCanary', 'Firefox', 'Safari',  'Opera', 'IE'*/]
+        browsers: ['PhantomJS'/*,'Chrome', 'ChromeCanary', 'Firefox', 'Safari',  'Opera', 'IE'*/]
     })
 }

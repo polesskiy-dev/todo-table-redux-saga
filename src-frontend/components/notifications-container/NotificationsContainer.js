@@ -16,9 +16,7 @@ export default class NotificationsContainer extends Component {
         const errors = this.props.errors;
         return (
             <article>
-                <div>
-                    {errors.map((error, index) => <ErrorAlert key={index} message={error}/>)}
-                </div>
+                {errors.map((error, index) => <ErrorAlert key={index} message={error}/>)}
                 <span
                     className={`glyphicon glyphicon-refresh ${styles.centered} ${this.props.openedConnectionsAmount > 0 ? styles['glyphicon-refresh-animate'] : styles.hide}`}/>
             </article>

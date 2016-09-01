@@ -9,6 +9,6 @@ const TodoRow = (props) => {
             <span className="glyphicon glyphicon-remove"/>
         }</td>
     </tr>
-}
+};
 
 export default TodoRow;

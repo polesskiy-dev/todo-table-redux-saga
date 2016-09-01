@@ -29,6 +29,7 @@ module.exports = function (config) {
             plugins: webpackConfig.plugins,
             resolve: webpackConfig.resolve,
             externals: {
+                'cheerio': 'window',
                 'react/addons': true,
                 'react/lib/ExecutionEnvironment': true,
                 'react/lib/ReactContext': true

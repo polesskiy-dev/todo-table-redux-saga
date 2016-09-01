@@ -8,7 +8,6 @@ import ErrorAlert from './error-alert/ErrorAlert'
 import styles from './NotificationsContainer.less'
 
 describe("Notification container content", function () {
-
     /**
      * Render container
      * @param initialState - mock store state
@@ -48,17 +47,5 @@ describe("Notification container content", function () {
         const notificationsContainer = renderNotificationsContainer();
         const errorAlerts = TestUtils.scryRenderedComponentsWithType(notificationsContainer, ErrorAlert);
         chai.expect(errorAlerts).to.be.empty;
-    })
-
-    it("Contains 1 error alert when errors List not empty in store", ()=> {
-        const notificationsContainer = renderNotificationsContainer(
-            Map({
-                "errors": List("hello"),
-                "openedConnectionsAmount": 0
-            }));
-        const errorAlerts = TestUtils.scryRenderedComponentsWithType(notificationsContainer, ErrorAlert);
-        // const errorAlerts = TestUtils.scryRenderedDOMComponentsWithTag(notificationsContainer, 'div');
-        console.log(errorAlerts);
-        chai.expect([1]).to.have.lengthOf(1);
-    })
+    });
 });

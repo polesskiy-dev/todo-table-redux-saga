@@ -8,7 +8,7 @@ const mockTodo = (isDone, text) => {
         isDone,
         text
     }
-}
+};
 
 describe('<TodoRow />', () => {
     it('Done todo has OK glyphicon', () => {

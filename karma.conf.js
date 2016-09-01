@@ -48,6 +48,9 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'/*,'Chrome', 'ChromeCanary', 'Firefox', 'Safari',  'Opera', 'IE'*/]
+        browsers: ['PhantomJS'/*,'Chrome', 'ChromeCanary', 'Firefox', 'Safari',  'Opera', 'IE'*/],
+
+        //if true, Karma will start and capture all configured browsers, run tests and then exit with an exit code of 0 or 1 depending on whether all tests passed or any tests failed.
+        singleRun: true
     })
 }

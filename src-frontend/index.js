@@ -17,7 +17,7 @@ import {routes} from './routes'
 const initialState = Map({
     'todos': List([]),
     'errors': List([]),
-    'openedConnections': 0
+    "openedConnectionsAmount": 0
 });
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();

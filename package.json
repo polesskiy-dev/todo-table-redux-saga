@@ -6,7 +6,7 @@
     "compile": "webpack --config webpack.config.js --progress --profile",
     "prestart": "npm run compile",
     "start": "node ./bin/www",
-    "test": "ava --tap"
+    "test": "karma start karma.conf.js"
   },
   "dependencies": {
     "async": "^2.0.0-rc.6",
@@ -74,6 +74,8 @@
     "mocha": "^3.0.2",
     "nock": "^8.0.0",
     "phantomjs-prebuilt": "^2.1.12",
+    "react-addons-test-utils": "^15.3.1",
+    "redux-mock-store": "^1.1.4",
     "style-loader": "^0.13.1",
     "webpack": "^1.8.4"
   }

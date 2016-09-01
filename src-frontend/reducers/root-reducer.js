@@ -2,7 +2,7 @@ import {Map, List} from 'immutable'
 import * as types from '../constants/action-types'
 const initialTodosState = Map({
     'todos': List([]),
-    "openedConnections": 0,
+    "openedConnectionsAmount": 0,
     'errors': List([])
 });
 
@@ -28,9 +28,9 @@ const rootReducer = (state = initialTodosState, action) => {
 
         /**data pending*/
         case types.DATA_PENDING_START:
-            return state.update('openedConnections', val=>++val);
+            return state.update('openedConnectionsAmount', val=>++val);
         case types.DATA_PENDING_FINISHED:
-            return state.update('openedConnections', val=>--val);
+            return state.update('openedConnectionsAmount', val=>--val);
 
         /** default */
         default:

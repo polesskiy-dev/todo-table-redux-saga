@@ -6,7 +6,7 @@ import styles from './NotificationsContainer.less'
 const mapStateToProps = (state) => {
     return {
         errors: state.get('errors'),
-        openedConnections: state.get('openedConnections')
+        openedConnectionsAmount: state.get('openedConnectionsAmount')
     }
 };
 
@@ -16,9 +16,11 @@ export default class NotificationsContainer extends Component {
         const errors = this.props.errors;
         return (
             <article>
-                {errors.map((error, index) => <ErrorAlert key={index} message={error}/>)}
+                <div>
+                    {errors.map((error, index) => <ErrorAlert key={index} message={error}/>)}
+                </div>
                 <span
-                    className={`glyphicon glyphicon-refresh ${styles.centered} ${this.props.openedConnections > 0 ? styles['glyphicon-refresh-animate'] : styles.hide}`}/>
+                    className={`glyphicon glyphicon-refresh ${styles.centered} ${this.props.openedConnectionsAmount > 0 ? styles['glyphicon-refresh-animate'] : styles.hide}`}/>
             </article>
         )
     }

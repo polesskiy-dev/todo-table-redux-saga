@@ -20,6 +20,9 @@ immutable js, redux-saga, eslint, autoprefixer.
     $ cd todo-table-redux-saga    
     $ npm install 
     $ npm start
+    
+## Tests:
+[ ] need to implement karma tests.
         
     
 

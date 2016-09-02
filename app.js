@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(API_URLS.todos_api, todos);
+app.use(API_URLS.TODOS_API, todos);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

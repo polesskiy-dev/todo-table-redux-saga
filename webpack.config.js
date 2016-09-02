@@ -19,6 +19,8 @@ module.exports = {
             }
         ],
         loaders: [
+            //JSON
+            // {test: /\.json$/, loader: "json"},
             //Compile ES6/7 to ES5 via babel
             {
                 test: /\.(js)$/,

@@ -23,13 +23,13 @@ export default class TodosTable extends Component {
             <div>
                 <table className="table table-stripped">
                     <thead>
-                        <tr>
-                            <th>Text:</th>
-                            <th>Is done:</th>
-                        </tr>
+                    <tr>
+                        <th>Text:</th>
+                        <th>Is done:</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {todos.map((todo, index) => <TodoRow key={index} todo={todo.toObject()}/>)}
+                    {todos.map((todo, index) => <TodoRow key={index} todo={todo.toObject()}/>)}
                     </tbody>
                 </table>
                 <button onClick={this.props.fetchTodos} className="btn btn-default">

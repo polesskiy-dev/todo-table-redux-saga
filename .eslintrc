@@ -1,5 +1,5 @@
 {
-  "extends": "eslint:recommended",
+  "extends": /*"airbnb-base",*/"eslint:recommended",
   "parser": "babel-eslint",
   "env": {
     "browser": true,
@@ -7,10 +7,10 @@
     "es6": true
   },
   "plugins": [
-    "react",
-    "ava"
+    "react"
   ],
   "rules": {
+    "prefer-const": 1,
     "no-debugger": 0,
     "no-console": 0,
     "new-cap": 0,
@@ -18,42 +18,14 @@
     "no-underscore-dangle": 0,
     "no-use-before-define": 0,
     "eol-last": 0,
+    "indent": 0,
+    "quotes": 0,
+    "semi": 0,
+    "object-curly-spacing": 0,
+    "paced-comment": 0,
     //react
     "react/jsx-no-undef": 1,
     "react/jsx-uses-react": 1,
-    "react/jsx-uses-vars": 1,
-    //ava
-    "ava/assertion-arguments": "error",
-    "ava/assertion-message": [
-      "off",
-      "always"
-    ],
-    "ava/max-asserts": [
-      "off",
-      5
-    ],
-    "ava/no-cb-test": "off",
-    "ava/no-identical-title": "error",
-    "ava/no-ignored-test-files": "error",
-    "ava/no-invalid-end": "error",
-    "ava/no-nested-tests": "error",
-    "ava/no-only-test": "error",
-    "ava/no-skip-assert": "error",
-    "ava/no-skip-test": "error",
-    "ava/no-statement-after-end": "error",
-    "ava/no-todo-implementation": "error",
-    "ava/no-todo-test": "warn",
-    "ava/no-unknown-modifiers": "error",
-    "ava/prefer-async-await": "error",
-    "ava/prefer-power-assert": "off",
-    "ava/test-ended": "error",
-    "ava/test-title": [
-      "error",
-      "if-multiple"
-    ],
-    "ava/use-t-well": "error",
-    "ava/use-t": "error",
-    "ava/use-test": "error",
-    "ava/use-true-false": "error"
+    "react/jsx-uses-vars": 1
   }
 }

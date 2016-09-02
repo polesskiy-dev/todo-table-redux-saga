@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateTodoForm from './create-todo-form/CreateTodoForm'
+import NewTodoForm from './new-todo-form/NewTodoForm'
 import TodosTable from './todos-table/TodosTable'
 
 const TodoApp = () => {
@@ -9,7 +9,7 @@ const TodoApp = () => {
                 <p>Create new todo:</p>
             </div>
             <div className="panel-body">
-                <CreateTodoForm/>
+                <NewTodoForm/>
             </div>
         </article>
 

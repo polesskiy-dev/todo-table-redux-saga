@@ -13,6 +13,9 @@ module.exports = function (config) {
         files: [
             {pattern: 'src-frontend/**/*.spec.js', watched: false},
         ],
+        exclude: [
+            'src-frontend/**/*.jest.spec.js'
+        ],
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor

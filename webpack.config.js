@@ -39,7 +39,9 @@ module.exports = {
                     'css?modules&importLoaders=1&localIdentName=[name]---[local]---[hash:base64:5]',
                     'autoprefixer',
                     'less')
-            }
+            },
+            //JSON
+            {test: /\.json$/, loader: 'json'}
         ]
     },
 
@@ -57,6 +59,6 @@ module.exports = {
     devtool: 'source-map',
 
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx', '.json']
     }
 };

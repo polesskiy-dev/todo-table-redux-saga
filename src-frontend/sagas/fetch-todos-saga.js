@@ -10,7 +10,6 @@ import * as todosApi from '../utils/todos-api'
 
 /**
  * Fetch todos saga.
- *
  */
 export default function* fetchTodosSaga() {
     const NOTIFICATION_TTL = 5000;

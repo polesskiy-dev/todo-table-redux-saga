@@ -1,0 +1,16 @@
+/**
+ * Auth action types
+ * @type {string}
+ */
+//login
+export const LOGIN_REQUEST_START = 'LOGIN_REQUEST_START';
+export const LOGIN_REQUEST_SUCCESS = 'LOGIN_REQUEST_SUCCESS';
+export const LOGIN_REQUEST_FAILURE = 'LOGIN_REQUEST_FAILURE';
+
+//register
+export const REGISTER_REQUEST_START = 'REGISTER_REQUEST_START';
+export const REGISTER_REQUEST_SUCCESS = 'REGISTER_REQUEST_SUCCESS';
+export const REGISTER_REQUEST_FAILURE = 'REGISTER_REQUEST_FAILURE';
+
+//logout
+export const LOGOUT = 'LOGOUT';

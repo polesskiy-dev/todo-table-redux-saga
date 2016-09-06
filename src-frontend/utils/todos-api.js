@@ -6,7 +6,7 @@ import fetch from 'isomorphic-fetch'
  *
  * @param res - server response
  */
-const checkHttpStatus = (res) => (res.ok) ? res : res.text().then(err => {
+export const checkHttpStatus = (res) => (res.ok) ? res : res.text().then(err => {
     throw err;
 });
 

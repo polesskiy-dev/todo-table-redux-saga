@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-//import Joi from 'joi-browser'
+import Joi from 'joi-browser'
 import * as Actions from '../../actions/auth-actions'
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        register: (credentials) => dispatch(Actions.registerStart(credentials)),
-        login: (credentials) => dispatch(Actions.loginStart(credentials))
+        register: (credentials, rememberMeFlag) => dispatch(Actions.registerStart(credentials, rememberMeFlag)),
+        login: (credentials, rememberMeFlag) => dispatch(Actions.loginStart(credentials, rememberMeFlag))
     };
 };
 
@@ -28,13 +28,18 @@ export default class AuthForm extends Component {
                 validationMessage: "",
                 value: "",
             },
+            passwordConfirm: {
+                isValid: false,
+                isValidating: false,
+                value: "",
+            },
             email: {
                 isValid: false,
                 isValidating: false,
                 validationMessage: "",
-                value: "",
+                value: ""
             }
-        }
+        };
     }
 
     /**
@@ -47,35 +52,12 @@ export default class AuthForm extends Component {
             login: this.state.login.value,
             password: this.state.password.value
         };
+        const rememberMeFlag = this.refs.rememberMeFlagCheckBox.value === "on";
 
         if (this.state.isRegistrationForm)
-            this.props.register(Object.assign({}, credentials, {email: this.state.email.value}));
+            this.props.register({...credentials, email: this.state.email.value}, rememberMeFlag);
         else
-            this.props.login(credentials)
-    };
-
-    handleLoginChange = (e, {value}=e.target) => {
-        e.preventDefault();
-        // const newLogin = Object.assign({}, this.state.login, {value: e.target.value});
-        const newLogin = {...this.state.login, value};
-        this.setState({login: newLogin});
-        console.log(this.state);
-    };
-
-    handlePasswordChange = (e, {value} = e.target) => {
-        e.preventDefault();
-        // const newPassword = Object.assign({}, this.state.password, {value: e.target.value});
-        const newPassword = {...this.state.password, value};
-        this.setState({password: newPassword});
-        console.log(this.state);
-    };
-
-    handleEmailChange = (e, {value}=e.target) => {
-        e.preventDefault();
-        //const newEmail = Object.assign({}, {...this.state.email}, {value: e.target.value});
-        const newEmail = {...this.state.email, value};
-        this.setState({email: newEmail});
-        console.log(this.state);
+            this.props.login(credentials, rememberMeFlag)
     };
 
     handleFormTypeToggle = () => {
@@ -83,18 +65,78 @@ export default class AuthForm extends Component {
         this.setState({isRegistrationForm: !this.state.isRegistrationForm})
     };
 
+    /**change handlers*/
+    handleLoginChange = (e, {value}=e.target) => {
+        e.preventDefault();
+        const newLogin = {...this.state.login, value};
+        this.setState({login: newLogin});
+    };
+
+    handlePasswordChange = (e, {value} = e.target) => {
+        e.preventDefault();
+        const newPassword = {...this.state.password, value};
+        this.setState({password: newPassword});
+    };
+
+    handlePasswordConfirmChange = (e, {value} = e.target) => {
+        e.preventDefault();
+        const newPasswordConfirm = {...this.state.passwordConfirm, value};
+        this.setState({passwordConfirm: newPasswordConfirm});
+    };
+
+    handleEmailChange = (e, {value}=e.target) => {
+        e.preventDefault();
+        const newEmail = {...this.state.email, value};
+        this.setState({email: newEmail});
+    };
+
+    /**blur handlers*/
+    handleLoginBlur = (e, {value:login}=e.target) => {
+        const {error} = Joi.string().alphanum().min(3).max(30).required().validate(login);
+        const isValid = (error === null);
+        const validationMessage = isValid ? "Login is OK!" : error.message;
+        const newLogin = {...this.state.login, isValidating: true, isValid, validationMessage};
+
+        this.setState({login: newLogin})
+    };
+
+    handlePasswordBlur = (e, {value:password}=e.target) => {
+        const {error} = Joi.string().min(5).max(15).required().validate(password)
+        const isValid = (error === null);
+        const validationMessage = isValid ? "Password is OK!" : error.message;
+        const newPassword = {...this.state.password, isValidating: true, isValid, validationMessage};
+        this.setState({password: newPassword})
+    };
+
+    handlePasswordConfirmBlur = (e, {value:passwordConfirm}=e.target) => {
+        const error = (passwordConfirm === this.state.password.value ? "" : "Passwords doesn't match!")
+        const isValid = (error === "");
+        const validationMessage = isValid ? "Passwords match!" : error;
+        const newPassword = {...this.state.passwordConfirm, isValidating: true, isValid, validationMessage};
+        console.log(this.state.login.value, this.state.password.value, this.state.passwordConfirm.value, this.state.email.value);
+        this.setState({passwordConfirm: newPassword})
+    };
+
+    handleEmailBlur = (e, {value:email}=e.target) => {
+        const {error} = Joi.string().email().required().validate(email);
+        const isValid = (error === null);
+        const validationMessage = isValid ? "Email is OK!" : error.message;
+        const newEmail = {...this.state.email, isValidating: true, isValid, validationMessage};
+        this.setState({email: newEmail})
+    };
+
     render() {
-        let {login, password, email} = this.state;
+        const {login, password, passwordConfirm, email, isRegistrationForm} = this.state;
         return (
             <section className="container-fluid">
                 <div className="row">
                     <div className="col-md-12 col-lg-offset-3 col-lg-6">
                         <article className="panel panel-default ">
                             <div className="panel-heading">
-                                Please login or register.
+                                Please, {isRegistrationForm ? "register" : "login"}
                             </div>
                             <div className="panel-body">
-                                <form id="auth-form" onSubmit={this.handleSubmit}>
+                                <form id="auth-form" onSubmit={this.handleSubmit} noValidate>
                                     <fieldset>
                                         {/**login*/}
                                         <div
@@ -104,6 +146,7 @@ export default class AuthForm extends Component {
                                             <input className="form-control"
                                                    ref="loginInput" type="text"
                                                    onChange={this.handleLoginChange}
+                                                   onBlur={this.handleLoginBlur}
                                                    value={login.value}
                                             />
                                         </div>
@@ -116,30 +159,55 @@ export default class AuthForm extends Component {
                                             <input className="form-control"
                                                    ref="passwordInput" type="password"
                                                    onChange={this.handlePasswordChange}
+                                                   onBlur={this.handlePasswordBlur}
                                                    value={password.value}
                                             />
                                         </div>
 
-                                        {/**email*/}
-                                        {this.state.isRegistrationForm ?
-                                            <div
-                                                className={`form-group ${ email.isValidating ? email.isValid ? "has-success" : "has-error" : ""}`}>
-                                                <label className="control-label" htmlFor="loginInput">
-                                                    Email: {email.validationMessage}</label>
-                                                <input className="form-control"
-                                                       ref="emailInput" type="email"
-                                                       onChange={this.handleEmailChange}
-                                                       value={email.value}
-                                                />
-                                            </div> : ""
+
+                                        {isRegistrationForm ?
+                                            <div>
+                                                {/**password confirm*/}
+                                                <div
+                                                    className={`form-group ${ passwordConfirm.isValidating ? passwordConfirm.isValid ? "has-success" : "has-error" : ""}`}>
+                                                    <label className="control-label" htmlFor="loginInput">
+                                                        Confirm password: {passwordConfirm.validationMessage}</label>
+                                                    <input className="form-control"
+                                                           ref="passwordConfirmInput" type="password"
+                                                           onChange={this.handlePasswordConfirmChange}
+                                                           onBlur={this.handlePasswordConfirmBlur}
+                                                           value={passwordConfirm.value}
+                                                    />
+                                                </div>
+
+                                                {/**email*/}
+                                                <div
+                                                    className={`form-group ${ email.isValidating ? email.isValid ? "has-success" : "has-error" : ""}`}>
+                                                    <label className="control-label" htmlFor="loginInput">
+                                                        Email: {email.validationMessage}</label>
+                                                    <input className="form-control"
+                                                           ref="emailInput" type="email"
+                                                           onChange={this.handleEmailChange}
+                                                           onBlur={this.handleEmailBlur}
+                                                           value={email.value}
+                                                    />
+                                                </div>
+                                            </div>
+                                            : ""
                                         }
+
+                                        <div className="checkbox">
+                                            <label>
+                                                <input ref="rememberMeFlagCheckBox" type="checkbox"/> Remember me
+                                            </label>
+                                        </div>
                                     </fieldset>
                                     <button form="auth-form" type="submit" className="btn btn-default">
-                                        {this.state.isRegistrationForm ? "Register" : "Login"}
+                                        {isRegistrationForm ? "Register" : "Login"}
                                     </button>
                                     <span><button className="btn btn-link" onClick={this.handleFormTypeToggle}>
-                                        {this.state.isRegistrationForm ? "Already registered?" : "Doesn't have account yet?"}
-                                            </button></span>
+                                {isRegistrationForm ? "Already registered?" : "Doesn't have account yet?"}
+                                </button></span>
                                 </form>
                             </div>
                         </article>

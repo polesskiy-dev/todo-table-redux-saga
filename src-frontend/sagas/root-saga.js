@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import * as todoTypes from '../constants/action-types'
-import * as authTypes from '../constants/auth-action-types'
+//import * as authTypes from '../constants/auth-action-types'
 import {takeEvery} from 'redux-saga'
 import {fork} from 'redux-saga/effects'
 import authSaga from './auth-saga'

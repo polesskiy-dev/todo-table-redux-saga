@@ -33,7 +33,7 @@ export default function* postTodoSaga(action) {
         //dispatch error while post todo
         yield put(todoActions.postTodoFailure(err.toString()));
 
-        //show post todos error in notification
+        //show post todosApi error in notification
         yield put(errorActions.showErrorNotification(err.toString()));
 
         //dispatch that request finished

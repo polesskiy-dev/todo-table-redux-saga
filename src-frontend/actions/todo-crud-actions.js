@@ -87,7 +87,7 @@ export const deleteTodoFailure = (err) => {
     }
 };
 
-//Fetch todos list
+//Fetch todosApi list
 export const fetchTodosStart = () => {
     return {
         type: types.FETCH_TODOS_START,

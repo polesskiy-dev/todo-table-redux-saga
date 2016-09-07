@@ -10,13 +10,14 @@ export const checkHttpStatus = (res) => (res.ok) ? res : res.text().then(err => 
     throw err;
 });
 
-export const post = (url, payload) => fetch(url, {
-    method: 'POST',
-    headers: {"Content-type": "application/json"},
-    body: JSON.stringify(payload)
-})
-    .then(checkHttpStatus)
-    .then(res => res.json())
+export const post = (url, payload) =>
+    fetch(url, {
+        method: 'POST',
+        headers: {"Content-type": "application/json"},
+        body: JSON.stringify(payload)
+    })
+        .then(checkHttpStatus)
+        .then(res => res.json())
 
 export const get = (url) =>
     fetch(url, {method: 'GET'})

@@ -6,8 +6,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-const API_URLS = require('./config/api-urls.config.json');
-const todos = require('./routes/todos');
+const urls = require('./config/api-urls.config.json');
+const todosApi = require('./routes/todos');
+const authApi = require('./routes/auth');
 
 var app = express();
 
@@ -23,7 +24,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(API_URLS.TODOS_API, todos);
+app.use(urls.TODOS_API, todosApi);
+app.use(urls.AUTH_API, authApi);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

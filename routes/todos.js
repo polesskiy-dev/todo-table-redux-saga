@@ -4,9 +4,9 @@ const router = express.Router();
 
 let todos = [];
 
-/** Get all todos, randomly send Error or OK*/
+/** Get all todosApi, randomly send Error or OK*/
 router.get('/', function (req, res, next) {
-    setTimeout(() => Math.random() < 0.5 ? res.json(todos) : res.status(500).send('Something broke while processing GET all todos request!'), 500);
+    setTimeout(() => Math.random() < 0.5 ? res.json(todos) : res.status(500).send('Something broke while processing GET all todosApi request!'), 500);
 });
 
 /** Post new todo, randomly send Error or OK - with this todo back*/

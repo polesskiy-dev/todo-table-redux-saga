@@ -11,7 +11,7 @@ export const UPDATE_TODO_START = 'UPDATE_TODO_START';
 export const UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS';
 export const UPDATE_TODO_FAILURE = 'UPDATE_TODO_FAILURE';
 
-//fetch all todos
+//fetch all todosApi
 export const FETCH_TODOS_START = 'FETCH_TODOS_START';
 // export const FETCHING_TODOS = 'FETCHING_TODOS';
 export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS';

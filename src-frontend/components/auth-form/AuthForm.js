@@ -3,12 +3,10 @@ import {connect} from 'react-redux'
 import Joi from 'joi-browser'
 import * as Actions from '../../actions/auth-actions'
 
-const mapDispatchToProps = (dispatch) => {
-    return {
+const mapDispatchToProps = (dispatch) => ({
         register: (credentials, rememberMeFlag) => dispatch(Actions.registerStart(credentials, rememberMeFlag)),
         login: (credentials, rememberMeFlag) => dispatch(Actions.loginStart(credentials, rememberMeFlag))
-    };
-};
+});
 
 @connect(null, mapDispatchToProps)
 export default class AuthForm extends Component {
@@ -48,15 +46,17 @@ export default class AuthForm extends Component {
      */
     handleSubmit = (e) => {
         e.preventDefault();
+        const {isRegistrationForm, login, password, passwordConfirm, email} = this.state;
         const credentials = {
-            login: this.state.login.value,
-            password: this.state.password.value
+            login: login.value,
+            password: password.value
         };
-        const rememberMeFlag = this.refs.rememberMeFlagCheckBox.value === "on";
 
-        if (this.state.isRegistrationForm)
-            this.props.register({...credentials, email: this.state.email.value}, rememberMeFlag);
-        else
+        const rememberMeFlag = this.refs.rememberMeFlagCheckBox.checked;
+
+        if (isRegistrationForm && login.isValid && password.isValid && passwordConfirm.isValid && email.isValid)
+            this.props.register({...credentials, email: email.value}, rememberMeFlag);
+        else if (!isRegistrationForm && login.isValid && password.isValid)
             this.props.login(credentials, rememberMeFlag)
     };
 

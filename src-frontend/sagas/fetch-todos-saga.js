@@ -9,7 +9,7 @@ import * as todosApi from '../utils/todos-api'
 // import * as apiUrls from '../../config/api-urls.config.json'
 
 /**
- * Fetch todos saga.
+ * Fetch todosApi saga.
  */
 export default function* fetchTodosSaga() {
     const NOTIFICATION_TTL = 5000;
@@ -18,21 +18,21 @@ export default function* fetchTodosSaga() {
         //dispatch that we will start request now
         yield put({type: types.DATA_PENDING_START});
 
-        //fetch todos from server
+        //fetch todosApi from server
         const todos = yield call(todosApi.get, apiUrls.TODOS_API);
 
-        console.log("fetchTodosSaga: fetched todos: ", todos);
+        console.log("fetchTodosSaga: fetched todosApi: ", todos);
 
-        //dispatch new todos
+        //dispatch new todosApi
         yield put(todoActions.fetchTodosSuccess(todos));
 
         //dispatch that request finished
         yield put({type: types.DATA_PENDING_FINISHED});
     } catch (err) {
-        //dispatch error while fetching todos
+        //dispatch error while fetching todosApi
         yield put(todoActions.fetchTodosFailure(err.toString()));
 
-        //show fetching todos error in notification
+        //show fetching todosApi error in notification
         yield put(errorActions.showErrorNotification(err.toString()));
 
         //dispatch that request finished

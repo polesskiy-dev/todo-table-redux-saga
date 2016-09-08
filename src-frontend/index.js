@@ -17,6 +17,7 @@ import {routes} from './routes'
 const initialState = Map({
     todos: List(),
     errors: List(),
+    userName: "",
     openedConnectionsAmount: 0,
 });
 
@@ -25,6 +26,9 @@ const sagaMiddleware = createSagaMiddleware();
 
 /* create store and init it by initial data, enhance by middleware*/
 const store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware, createLogger()));
+
+/* try to login*/
+
 
 sagaMiddleware.run(rootSaga);
 

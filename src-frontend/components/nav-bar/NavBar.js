@@ -4,13 +4,18 @@ import {Link} from 'react-router'
 import * as Actions from '../../actions/auth-actions'
 import styles from './NavBar.less'
 
+const mapStateToProps = (state) => {
+    return {
+        login: state.get('login')
+    }
+};
 const mapDispatchToProps = (dispatch) => {
     return {
         logout: () => dispatch(Actions.logout())
     };
 };
 
-@connect(null, mapDispatchToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 export default class NavBar extends Component {
     render() {
         return (

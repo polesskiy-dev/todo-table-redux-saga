@@ -18,7 +18,7 @@ const checkAuthTokenExists = () => window.localStorage.getItem('token') || windo
  */
 const enterToAuthRequiredRoute = (nextState, replace)=> {
     if (!checkAuthTokenExists())
-        replace('/')
+        replace('/auth')
 };
 
 export const routes =

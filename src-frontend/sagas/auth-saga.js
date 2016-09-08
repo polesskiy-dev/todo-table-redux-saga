@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch'
-import { browserHistory } from 'react-router'
+import {browserHistory} from 'react-router'
 import * as Actions from '../actions/auth-actions'
 import * as types from '../constants/auth-action-types'
 import {call, put, take} from 'redux-saga/effects'
@@ -22,7 +22,7 @@ export const checkHttpStatus = (res) => {
 export const postAuth = (url, credentials) =>
     fetch(url, {
         method: 'POST',
-        headers: {"Content-type": /*"application/x-www-form-urlencoded"*/"application/json"},
+        headers: {"Content-type": "application/json"},
         body: JSON.stringify(credentials)
     })
         .then(checkHttpStatus)
@@ -53,8 +53,8 @@ export function* authorize({credentials, rememberMeFlag}) {
             browserHistory.push('/todo-app');
             //logout
             yield take(types.LOGOUT);
-            yield call(removeToken());
-            browserHistory.push('/');
+            yield call(removeToken);
+            browserHistory.push('/auth');
         } else
             throw new Error(err || "No token and meaningful error from server")
     } catch (err) {
@@ -66,7 +66,7 @@ export function* authorize({credentials, rememberMeFlag}) {
 
 export default function* authSaga() {
     for (; ;) {
-        const {payload} = yield take(types.LOGIN_REQUEST_START)
+        const {payload} = yield take(types.LOGIN_REQUEST_START || types.REGISTER_REQUEST_START)
         yield call(authorize, payload);
     }
 }

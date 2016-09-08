@@ -5,14 +5,14 @@ import * as Actions from '../actions/auth-actions'
 import * as types from '../constants/auth-action-types'
 import {call, put, take} from 'redux-saga/effects'
 import * as apiUrls from '../constants/api-urls'
+import * as authUtils from '../utils/auth-utils';
 
 export const checkHttpStatus = (res) => {
     if (res.status >= 200 && res.status < 300)
         return Promise.resolve(res)
     else
         return Promise.reject(new Error(res.statusText))
-}
-
+};
 
 /**
  * Send POST with user auth credentials
@@ -28,32 +28,17 @@ export const postAuth = (url, credentials) =>
         .then(checkHttpStatus)
         .then(res => res.json());
 
-
-/**
- * Save token to local or session storage
- * @param token
- * @param rememberMeFlag
- */
-export const storeToken = (token, rememberMeFlag) => {
-    const storage = rememberMeFlag ? window.localStorage : window.sessionStorage;
-    storage.setItem('token', token)
-};
-export const removeToken = () => {
-    window.localStorage.removeItem('token');
-    window.sessionStorage.removeItem('token');
-};
-
 export function* authorize({credentials, rememberMeFlag}) {
     try {
         const {token, err} = yield call(postAuth, apiUrls.AUTH_API, credentials);
-        //dispatch new token from server if exists
+        //obtain new token from server
         if (token) {
             yield put(Actions.loginSuccess(token));
-            yield call(storeToken, token, rememberMeFlag);
+            yield call(authUtils.saveAuthToken, token, rememberMeFlag);
             browserHistory.push('/todo-app');
             //logout
             yield take(types.LOGOUT);
-            yield call(removeToken);
+            yield call(authUtils.removeAuthToken);
             browserHistory.push('/auth');
         } else
             throw new Error(err || "No token and meaningful error from server")
@@ -66,7 +51,10 @@ export function* authorize({credentials, rememberMeFlag}) {
 
 export default function* authSaga() {
     for (; ;) {
-        const {payload} = yield take(types.LOGIN_REQUEST_START || types.REGISTER_REQUEST_START)
-        yield call(authorize, payload);
+        const {payload} = yield take(types.LOGIN_REQUEST_START || types.REGISTER_REQUEST_START);
+
+        //if we're not authorized (no auth token) - try to authorize
+        if (!authUtils.authTokenExists())
+            yield call(authorize, payload);
     }
 }

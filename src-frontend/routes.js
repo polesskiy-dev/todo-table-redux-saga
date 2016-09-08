@@ -4,11 +4,7 @@ import App from './components/App'
 import AuthForm from './components/auth-form/AuthForm'
 import TodoPage from './components/toddo-app/TodoPage'
 import About from './components/about/About'
-
-/**
- * Check that auth token exists in local or session storage
- */
-const checkAuthTokenExists = () => window.localStorage.getItem('token') || window.sessionStorage.getItem('token');
+import * as authUtils from './utils/auth-utils'
 
 /**
  * Try to enter to route that requires auth token exists.
@@ -17,7 +13,7 @@ const checkAuthTokenExists = () => window.localStorage.getItem('token') || windo
  * @param replace
  */
 const enterToAuthRequiredRoute = (nextState, replace)=> {
-    if (!checkAuthTokenExists())
+    if (!authUtils.authTokenExists())
         replace('/auth')
 };
 

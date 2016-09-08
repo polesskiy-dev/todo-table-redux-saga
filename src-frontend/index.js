@@ -13,6 +13,7 @@ import createLogger from 'redux-logger'
 import reducer from './reducers/root-reducer'
 import rootSaga from './sagas/root-saga'
 import {routes} from './routes'
+import * as AuthActions from './actions/auth-actions'
 
 const initialState = Map({
     todos: List(),
@@ -28,7 +29,7 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware, createLogger()));
 
 /* try to login*/
-
+store.dispatch(AuthActions.loginStart());
 
 sagaMiddleware.run(rootSaga);
 

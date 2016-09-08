@@ -5,7 +5,7 @@ import TodoRow from './todo-row/TodoRow'
 
 const mapStateToProps = (state) => {
     return {
-        todos: state.get('todosApi')
+        todos: state.get('todos')
     }
 };
 const mapDispatchToProps = (dispatch) => {

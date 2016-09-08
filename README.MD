@@ -21,10 +21,6 @@ immutable js, redux-saga, eslint, autoprefixer.
     $ npm install 
     $ npm start
     
-## Tests:
-[ ] need to implement karma tests.
-        
-    
 
     
     

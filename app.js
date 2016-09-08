@@ -27,6 +27,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(urls.TODOS_API, todosApi);
 app.use(urls.AUTH_API, authApi);
 
+// handle every other route with index.html, which will contain
+// a script tag to your application's JavaScript file(s).
+app.use('*', function (request, response){
+    response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+})
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

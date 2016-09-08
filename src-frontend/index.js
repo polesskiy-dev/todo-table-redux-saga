@@ -4,7 +4,7 @@
 "use strict";
 import React from 'react'
 import {render} from 'react-dom'
-import {Router, hashHistory} from 'react-router'
+import {Router, browserHistory/*, hashHistory*/} from 'react-router'
 import {createStore, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 import {Map, List} from 'immutable'
@@ -15,10 +15,11 @@ import rootSaga from './sagas/root-saga'
 import {routes} from './routes'
 
 const initialState = Map({
-    todos: List([]),
-    errors: List([]),
+    todos: List(),
+    errors: List(),
     openedConnectionsAmount: 0,
 });
+
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
@@ -30,7 +31,7 @@ sagaMiddleware.run(rootSaga);
 render(
 //Provider allows us to receive data from store of our app (by connect function)
     <Provider store={store}>
-        <Router history={hashHistory} routes={routes}/>
+        <Router history={browserHistory} routes={routes}/>
     </Provider>,
     document.getElementById('app-root')
 );

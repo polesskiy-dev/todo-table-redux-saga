@@ -2,7 +2,7 @@ import React from 'react'
 import NewTodoForm from './new-todo-form/NewTodoForm'
 import TodosTable from './todos-table/TodosTable'
 
-const TodoApp = () => {
+const TodoPage = () => {
     return <section>
         <article className="panel panel-default">
             <div className="panel-heading">
@@ -24,4 +24,4 @@ const TodoApp = () => {
     </section>
 }
 
-export default TodoApp;
+export default TodoPage;

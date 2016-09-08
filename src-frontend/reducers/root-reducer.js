@@ -1,10 +1,6 @@
 import {Map, List} from 'immutable'
 import * as types from '../constants/action-types'
-const initialTodosState = Map({
-    'todos': List([]),
-    "openedConnectionsAmount": 0,
-    'errors': List([])
-});
+const initialTodosState = Map();
 
 const rootReducer = (state = initialTodosState, action) => {
     switch (action.type) {

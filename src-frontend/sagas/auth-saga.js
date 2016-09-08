@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch'
+import { browserHistory } from 'react-router'
 import * as Actions from '../actions/auth-actions'
 import * as types from '../constants/auth-action-types'
 import {call, put, take} from 'redux-saga/effects'
@@ -49,13 +50,15 @@ export function* authorize({credentials, rememberMeFlag}) {
         if (token) {
             yield put(Actions.loginSuccess(token));
             yield call(storeToken, token, rememberMeFlag);
+            browserHistory.push('/todo-app');
             //logout
-            yield take(types.LOGOUT)
-            yield call(Actions.logout());
+            yield take(types.LOGOUT);
             yield call(removeToken());
+            browserHistory.push('/');
         } else
             throw new Error(err || "No token and meaningful error from server")
     } catch (err) {
+        console.error(err)
         //dispatch that login request fail
         yield put(Actions.loginFailure(err));
     }

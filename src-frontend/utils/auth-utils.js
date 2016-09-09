@@ -1,8 +1,8 @@
 /** get token from storage */
-export const getAuthToken = () => window.localStorage.getItem('token') || window.sessionStorage.getItem('token');
+export const getTokenFromStorage = () => window.localStorage.getItem('token') || window.sessionStorage.getItem('token');
 
 /** check that auth token exists*/
-export const authTokenExists = () => !!getAuthToken();
+export const authTokenExists = () => !!getTokenFromStorage();
 
 /** remove token from storages */
 export const removeAuthToken = () => {

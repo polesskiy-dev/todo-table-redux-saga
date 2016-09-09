@@ -9,13 +9,24 @@ import * as httpUtils from '../utils/http-utils'
 
 export function* authorize({credentials, rememberMeFlag}) {
     try {
-        const {token, err} = yield call(httpUtils.post, apiUrls.AUTH_API, credentials);
-        //obtain new token from server
+        //try to get token from local or session storage
+        let token = authUtils.getTokenFromStorage();
+        let err = null;
+
+        //get token from server if no auth token in storages
+        if (!token) {
+            const res = yield call(httpUtils.post, apiUrls.AUTH_API, credentials);
+            token = res.token;
+            err = res.err;
+        }
+
+        //check that token from server exists
         if (token) {
             yield put(Actions.loginSuccess(token));
             yield call(authUtils.saveAuthToken, token, rememberMeFlag);
             browserHistory.push('/todo-app');
-            //logout
+
+            //catch logout action and perform logout
             yield take(types.LOGOUT);
             yield call(authUtils.removeAuthToken);
             browserHistory.push('/auth');
@@ -31,13 +42,6 @@ export function* authorize({credentials, rememberMeFlag}) {
 export default function* authSaga() {
     for (; ;) {
         const {payload} = yield take(types.LOGIN_REQUEST_START || types.REGISTER_REQUEST_START);
-
-        //if we're not authorized (no auth token) - try to authorize
-        if (!authUtils.authTokenExists())
-            yield call(authorize, payload)
-        else {
-            console.log("already register");
-            browserHistory.push('/todo-app');
-        }
+        yield call(authorize, payload)
     }
 }

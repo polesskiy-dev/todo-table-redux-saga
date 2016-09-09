@@ -6,13 +6,13 @@ const rootReducer = (state = initialTodosState, action) => {
     switch (action.type) {
         /** POST todo */
         case types.POST_TODO_SUCCESS:
-            return state.update('todosApi', todos=>todos.push(Map(action.payload.todo)));
+            return state.update('todos', todos=>todos.push(Map(action.payload.todo)));
         case types.POST_TODO_FAILURE:
             return state;
 
         /** fetch todosApi */
         case types.FETCH_TODOS_SUCCESS:
-            return state.set('todosApi', List(action.payload.todos.map((todo)=>Map(todo))));
+            return state.set('todos', List(action.payload.todos.map((todo)=>Map(todo))));
         case types.FETCH_TODOS_FAILURE:
             return state;
 

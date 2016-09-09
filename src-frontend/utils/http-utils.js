@@ -6,10 +6,15 @@ import fetch from 'isomorphic-fetch'
  *
  * @param res - server response
  */
-export const checkHttpStatus = (res) => (res.ok) ? res : res.text().then(err => {
+const checkHttpStatus = (res) => (res.ok) ? res : res.text().then(err => {
     throw err;
 });
 
+/**
+ * POST payload to url
+ * @param url
+ * @param payload
+ */
 export const post = (url, payload) =>
     fetch(url, {
         method: 'POST',
@@ -17,10 +22,14 @@ export const post = (url, payload) =>
         body: JSON.stringify(payload)
     })
         .then(checkHttpStatus)
-        .then(res => res.json())
+        .then(res => res.json());
 
+/**
+ * GET data from url
+ * @param url
+ */
 export const get = (url) =>
     fetch(url, {method: 'GET'})
         .then(checkHttpStatus)
-        .then(res => res.json())
+        .then(res => res.json());
 

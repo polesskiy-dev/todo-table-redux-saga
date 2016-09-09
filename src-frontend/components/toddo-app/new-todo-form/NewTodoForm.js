@@ -83,14 +83,13 @@ export default class NewTodoForm extends Component {
             <form id="create-todo-form" action="/api/todos"
                   onSubmit={this.handleSubmit}>
                 <fieldset>
-                    <div className={`form-group ${this.state.hasValidInput ? "has-success" : "has-danger"}`}>
+                    <div className={`form-group ${this.state.hasValidInput ? "has-success" : "has-error"}`}>
                         <label htmlFor="textInput">Text:</label>
                         <input ref="textInput" type="text"
                                onChange={this.handleInputChange}
                                onBlur={this.handleInputBlur}
                                onFocus={this.handleInputFocus}
                                className={`form-control ${this.state.hasValidInput ? "form-control-success" : "form-control-danger"}`}/>
-                        <div className="form-control-feedback">{this.state.inputValidationMessage}</div>
                     </div>
                 </fieldset>
                 <button form="create-todo-form" type="submit" className="btn btn-default">

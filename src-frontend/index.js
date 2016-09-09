@@ -28,10 +28,10 @@ const sagaMiddleware = createSagaMiddleware();
 /* create store and init it by initial data, enhance by middleware*/
 const store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware, createLogger()));
 
+sagaMiddleware.run(rootSaga);
+
 /* try to login*/
 store.dispatch(AuthActions.loginStart());
-
-sagaMiddleware.run(rootSaga);
 
 render(
 //Provider allows us to receive data from store of our app (by connect function)

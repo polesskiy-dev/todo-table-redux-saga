@@ -29,7 +29,7 @@ app.use(urls.AUTH_API, authApi);
 
 // handle every other route with index.html, which will contain
 // a script tag to your application's JavaScript file(s).
-app.use('*', function (request, response){
+app.use('*', function (request, response) {
     response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
 })
 

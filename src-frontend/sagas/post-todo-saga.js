@@ -1,12 +1,11 @@
 import 'babel-polyfill';
-// import Promise from 'bluebird'
 import * as todoActions from '../actions/todo-crud-actions'
 import * as errorActions from '../actions/errors-actions'
 import * as types from '../constants/action-types'
 import {delay} from 'redux-saga'
 import {call, put} from 'redux-saga/effects'
 import * as apiUrls from '../constants/api-urls'
-import * as todosApi from '../utils/todos-api'
+import * as httpUtils from '../utils/http-utils'
 
 /**
  * POST new todo.
@@ -17,12 +16,11 @@ export default function* postTodoSaga(action) {
     const NOTIFICATION_TTL = 5000;
 
     try {
-        // console.log(action);
         //dispatch that we will start request now
         yield put({type: types.DATA_PENDING_START});
 
         //POST todo to server
-        const todo = yield call(todosApi.post, apiUrls.TODOS_API, action.payload.todo);
+        const todo = yield call(httpUtils.post, apiUrls.TODOS_API, action.payload.todo);
 
         //dispatch new todo from server
         yield put(todoActions.postTodoSuccess(todo));

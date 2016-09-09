@@ -19,8 +19,6 @@ module.exports = {
             }
         ],
         loaders: [
-            //JSON
-            // {test: /\.json$/, loader: "json"},
             //Compile ES6/7 to ES5 via babel
             {
                 test: /\.(js)$/,
@@ -39,9 +37,7 @@ module.exports = {
                     'css?modules&importLoaders=1&localIdentName=[name]---[local]---[hash:base64:5]',
                     'autoprefixer',
                     'less')
-            },
-            //JSON
-            {test: /\.json$/, loader: 'json'}
+            }
         ]
     },
 

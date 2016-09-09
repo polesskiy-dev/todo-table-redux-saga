@@ -24,7 +24,8 @@ export default class TodoPage extends Component {
                                              className={`glyphicon ${isNewTodoBodyShow ? "glyphicon glyphicon-collapse-up" : "glyphicon-collapse-down" }`}/>
                     </p>
                 </div>
-                <div className={`panel-body ${isNewTodoBodyShow ? styles['animated-slide-down'] : styles['animated-slide-up']}`}>
+                <div
+                    className={`panel-body ${isNewTodoBodyShow ? styles['animated-slide-down'] : styles['animated-slide-up']}`}>
                     {isNewTodoBodyShow ? <NewTodoForm/> : ""}
                 </div>
             </article>

@@ -11,13 +11,11 @@ const userService = require('../services/UserService');
  * GET all users
  */
 router.get('/', function (req, res) {
-    userService.getAllUsers((err, users)=> {
-        if (err)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({err});
-        if (users)
-            return res.json(users);
-        return res.sendStatus(HttpStatus.NO_CONTENT);
-    })
+    userService.getAllUsers()
+        .then(users=>users
+            ? res.json(users)
+            : res.sendStatus(HttpStatus.NO_CONTENT))
+        .catch(err=>res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({err}))
 });
 
 /**
@@ -25,35 +23,26 @@ router.get('/', function (req, res) {
  */
 router.get('/:login', function (req, res) {
     const {login} = req.params;
-    userService.getUser({login}, (err, user)=> {
-        if (err)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({err});
-        if (user)
-            return res.json(user);
-        return res.sendStatus(HttpStatus.NO_CONTENT);
-    })
+    userService.getUser({login})
+        .then(user=>user
+            ? res.json(user)
+            : res.sendStatus(HttpStatus.NO_CONTENT))
+        .catch(err=>res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({err}))
 });
+
 
 /**
  * POST create new user
  */
 router.post('/', function (req, res) {
-    userService.saveUser(req.body, (err, user) => {
-        if (err || !user) {
-            //if validation problem
-            if (err.name === "ValidationError") {
-                res.status(HttpStatus.BAD_REQUEST).send({err: err.errors});
-            } else {
-                //user already exists in DB
-                res.status(HttpStatus.CONFLICT).end();
-            }
-        } else {
-            /** response with auth token - log in*/
-            //let token = jwt.encode(user, SECRET_KEY);
-            //res.status(HttpStatus.CREATED).json({token: token});
-            res.status(HttpStatus.CREATED).json(user);
-        }
-    })
+    userService.saveUser(req.body)
+        .then(user=>user
+            ? res.status(HttpStatus.CREATED).json(user)
+            : res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR))
+        .catch(err=>(err.name === "ValidationError")
+            ? res.status(HttpStatus.BAD_REQUEST).send({err: err.errors})
+            : res.status(HttpStatus.CONFLICT).send({err})
+        )
 });
 
 /**
@@ -61,13 +50,11 @@ router.post('/', function (req, res) {
  */
 router.put('/:login', function (req, res) {
     const {login} = req.params;
-    userService.replaceUser({login}, req.body, (err, user)=> {
-        if (err)
-            return res.status(HttpStatus.BAD_REQUEST).send({err});
-        if (user)
-            return res.json(user);
-        return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-    })
+    userService.replaceUser({login}, req.body)
+        .then(user=>user
+            ? res.json(user)
+            : res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR))
+        .catch(err=>res.status(HttpStatus.BAD_REQUEST).send({err}))
 });
 
 /**
@@ -75,11 +62,9 @@ router.put('/:login', function (req, res) {
  */
 router.delete('/:login', function (req, res) {
     const {login} = req.params;
-    userService.deleteUser({login}, (err)=> {
-        if (err)
-            return res.status(HttpStatus.BAD_REQUEST).send({err});
-        return res.end();
-    })
+    userService.deleteUser({login})
+        .then(res.end())
+        .catch(err=>res.status(HttpStatus.BAD_REQUEST).send({err}))
 });
 
 module.exports = router;

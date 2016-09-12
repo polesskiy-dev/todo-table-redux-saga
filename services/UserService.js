@@ -1,5 +1,6 @@
 const assert = require('assert');
 const mongoose = require('mongoose');
+const UserSchema = require('../models/UserSchema');
 
 class UserService {
     constructor() {
@@ -7,58 +8,63 @@ class UserService {
 
     /**
      * Save user to DB
-     * @param user
-     * @param cb
+     *
+     * @param newUser
+     * @returns Promise
      */
-    saveUser(newUser, cb) {
+    saveUser(newUser) {
         assert.ok(newUser);
-
-        mongoose.model('User').save(newUser, cb);
+        const userSchemaInstance = new UserSchema(newUser);
+        return userSchemaInstance.save();
     }
 
     /**
      * Replace user by new one by _id or login in DB
+     *
      * @param newUser
-     * @param cb
+     * @returns Promise
      */
-    replaceUser(userSelector, newUser, cb) {
+    replaceUser(userSelector, newUser) {
         const {_id, login} = userSelector;
         assert.ok(_id || login, newUser);
 
-        mongoose.model('User').findOneAndUpdate(_id ? {_id} : {login}, newUser, {new: true}, cb);
+        return UserSchema.findOneAndUpdate(_id ? {_id} : {login}, newUser, {new: true});
     }
 
     /**
      * Delete user by _id or login from DB
+     *
      * @param userSelector
-     * @param cb
+     * @returns Promise
      */
-    deleteUser(userSelector, cb) {
+    deleteUser(userSelector) {
         const {_id, login} = userSelector;
         assert.ok(_id || login);
 
-        mongoose.model('User').remove(_id ? {_id} : {login}, cb)
+        return UserSchema.remove(_id ? {_id} : {login})
     }
 
 
     /**
      * Get user by _id or login or email from DB
+     *
      * @param userSelector
-     * @param cb
+     * @returns Promise
      */
-    getUser(userSelector, cb) {
+    getUser(userSelector) {
         const {_id, login, email} = userSelector;
         assert.ok(_id || login || email);
 
-        mongoose.model('User').findOne(_id ? {_id} : (login ? {login} : {email}), cb);
+        return UserSchema.findOne(_id ? {_id} : (login ? {login} : {email}));
     }
 
     /**
      * Get all users from DB
-     * @param cb
+     *
+     * @returns Promise
      */
-    getAllUsers(cb) {
-        mongoose.model('User').find({}, cb);
+    getAllUsers() {
+        return UserSchema.find({});
     }
 }
 

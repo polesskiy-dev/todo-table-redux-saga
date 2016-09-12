@@ -1,0 +1,25 @@
+{
+  "credentials": {
+    "type": "cloud",
+    "name": "todo-table-redux",
+    "host": "ds029486.mlab.com",
+    "port": 29486,
+    "user": "todo-table",
+    "password": "todo-table",
+    "mongod version": "3.0.7"
+  },
+  "options": {
+    "server": {
+      "socketOptions": {
+        "keepAlive": 300000,
+        "connectTimeoutMS": 30000
+      }
+    },
+    "replset": {
+      "socketOptions": {
+        "keepAlive": 300000,
+        "connectTimeoutMS": 30000
+      }
+    }
+  }
+}

@@ -21,6 +21,7 @@ export default class NewTodoForm extends Component {
             hasValidInput: false,
             inputValidationMessage: "",
         }
+
     }
 
     /**

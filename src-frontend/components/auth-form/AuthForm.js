@@ -4,8 +4,8 @@ import Joi from 'joi-browser'
 import * as Actions from '../../actions/auth-actions'
 
 const mapDispatchToProps = (dispatch) => ({
-        register: (credentials, rememberMeFlag) => dispatch(Actions.registerStart(credentials, rememberMeFlag)),
-        login: (credentials, rememberMeFlag) => dispatch(Actions.loginStart(credentials, rememberMeFlag))
+    register: (credentials, rememberMeFlag) => dispatch(Actions.registerStart(credentials, rememberMeFlag)),
+    login: (credentials, rememberMeFlag) => dispatch(Actions.loginStart(credentials, rememberMeFlag))
 });
 
 @connect(null, mapDispatchToProps)
@@ -60,6 +60,7 @@ export default class AuthForm extends Component {
             this.props.login(credentials, rememberMeFlag)
     };
 
+    /** change form type - login or register*/
     handleFormTypeToggle = () => {
         event.preventDefault();
         this.setState({isRegistrationForm: !this.state.isRegistrationForm})
@@ -101,7 +102,7 @@ export default class AuthForm extends Component {
     };
 
     handlePasswordBlur = (e, {value:password}=e.target) => {
-        const {error} = Joi.string().min(5).max(15).required().validate(password)
+        const {error} = Joi.string().min(3).max(15).required().validate(password);
         const isValid = (error === null);
         const validationMessage = isValid ? "Password is OK!" : error.message;
         const newPassword = {...this.state.password, isValidating: true, isValid, validationMessage};

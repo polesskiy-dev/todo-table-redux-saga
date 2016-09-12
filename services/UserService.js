@@ -1,6 +1,8 @@
 const assert = require('assert');
-const mongoose = require('mongoose');
 const UserSchema = require('../models/UserSchema');
+const mongoose = require('mongoose');
+// Use native promises
+mongoose.Promise = global.Promise;
 
 class UserService {
     constructor() {

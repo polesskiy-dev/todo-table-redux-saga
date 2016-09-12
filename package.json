@@ -7,7 +7,7 @@
     "prestart": "npm run compile-frontend",
     "start": "node ./bin/www",
     "start:server": "node ./bin/www",
-    "test": "karma start karma.conf.js  && ava",
+    "test": "karma start karma.conf.js",
     "test:server": "ava",
     "test:jest": "jest --verbose"
   },
@@ -146,6 +146,6 @@
     ],
     "concurrency": 5,
     "failFast": true,
-    "tap": true
+    "verbose": true
   }
 }

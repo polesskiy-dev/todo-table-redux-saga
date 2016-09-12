@@ -11,7 +11,7 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            {pattern: 'src-frontend/**/*.spec.js', watched: false},
+            {pattern: 'src-frontend/**/*.spec.js', watched: false}
         ],
         exclude: [
             'src-frontend/**/*.jest.spec.js'

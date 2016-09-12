@@ -7,7 +7,7 @@
     "prestart": "npm run compile-frontend",
     "start": "node ./bin/www",
     "start:server": "node ./bin/www",
-    "test": "karma start karma.conf.js",
+    "test": "karma start karma.conf.js && ava",
     "test:jest": "jest --verbose"
   },
   "dependencies": {
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
+    "ava": "^0.16.0",
     "babel-cli": "^6.14.0",
     "babel-core": "^6.13.2",
     "babel-eslint": "^6.1.2",
@@ -120,5 +121,25 @@
       "src-frontend"
     ],
     "testRegex": "\\.jest\\.spec\\.js"
+  },
+  "ava": {
+    "files": [
+      "*/**/*.spec.js",
+      "!node_modules",
+      "!src-frontend"
+    ],
+    "source": [
+      "*/**/*.spec.js",
+      "!node_modules",
+      "!src-frontend"
+    ],
+    "concurrency": 5,
+    "failFast": true,
+    "tap": true,
+    "powerAssert": false,
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   }
 }

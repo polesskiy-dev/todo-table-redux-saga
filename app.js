@@ -2,11 +2,11 @@
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-
 const urls = require('./config/api-urls.config.json');
+const checkAuthJwt = require('./middleware/jwt-middleware');
 
 var app = express();
 
@@ -19,12 +19,13 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
+//app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(urls.TODOS_API, require('./routes/todos-api'));
 app.use(urls.AUTH_API, require('./routes/auth-api'));
-app.use(urls.USERS_API, require('./routes/users-api'));
+app.use(urls.TODOS_API, [checkAuthJwt], require('./routes/todos-api'));
+app.use(urls.USERS_API, /*[checkAuthJwt], */require('./routes/users-api'));
 
 /** connect to DB*/
 require('./utils/database-connect')();

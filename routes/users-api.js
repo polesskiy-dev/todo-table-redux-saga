@@ -53,8 +53,8 @@ router.put('/:login', function (req, res) {
     userService.replaceUser({login}, req.body)
         .then(user=>user
             ? res.json(user)
-            : res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR))
-        .catch(err=>res.status(HttpStatus.BAD_REQUEST).send({err}))
+            : res.sendStatus(HttpStatus.BAD_REQUEST))
+        .catch(err=>res.status(HttpStatus.CONFLICT).send({err}))
 });
 
 /**

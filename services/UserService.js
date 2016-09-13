@@ -3,6 +3,7 @@ const UserSchema = require('../models/UserSchema');
 const mongoose = require('mongoose');
 // Use native promises
 mongoose.Promise = global.Promise;
+mongoose.set('debug', true);
 
 class UserService {
     constructor() {

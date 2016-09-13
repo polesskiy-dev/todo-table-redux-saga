@@ -3,5 +3,6 @@
     "user",
     "admin"
   ],
-  "salt": 10
+  "salt": 10,
+  "jwtSecret": "very-secret-key"
 }

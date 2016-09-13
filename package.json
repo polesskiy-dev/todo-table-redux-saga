@@ -29,6 +29,7 @@
     "jade": "~1.11.0",
     "jasmine-core": "^2.5.0",
     "joi-browser": "^9.0.4",
+    "jsonwebtoken": "^7.1.9",
     "moment": "^2.14.1",
     "morgan": "~1.7.0",
     "react": "^15.3.0",
@@ -105,9 +106,11 @@
   },
   "babel": {
     "presets": [
-      "react",
       "es2015",
       "stage-0"
+    ],
+    "plugins": [
+      "transform-runtime"
     ]
   },
   "jest": {
@@ -122,15 +125,6 @@
       "src-frontend"
     ],
     "testRegex": "\\.jest\\.spec\\.js"
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0"
-    ],
-    "plugins": [
-      "transform-runtime"
-    ]
   },
   "ava": {
     "require": [

@@ -10,11 +10,11 @@ class App extends Component {
             <div>
                 <header className="container">
                     <NavBar/>
+                    <NotificationsContainer/>
                 </header>
                 <section className="container">
                     {/*render childs from router here*/}
                     {this.props.children}
-                    <NotificationsContainer/>
                 </section>
             </div>
         );

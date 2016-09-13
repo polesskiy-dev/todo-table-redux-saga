@@ -6,9 +6,6 @@ mongoose.Promise = global.Promise;
 mongoose.set('debug', true);
 
 class UserService {
-    constructor() {
-    }
-
     /**
      * Save user to DB
      *

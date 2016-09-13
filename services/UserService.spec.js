@@ -18,15 +18,6 @@ test.before("Create new user", async function () {
     }
 });
 
-test.after.always("Delete user", async function () {
-    try {
-        let res = await userService.deleteUser(TEST_USER);
-        expect(res.result.ok).to.be.ok
-    } catch (e) {
-        console.log(e.message);
-        expect(e).to.not.exist;
-    }
-});
 
 test("GET single user", async function () {
     try {
@@ -62,3 +53,12 @@ test("PUT replace user", async function () {
     }
 });
 
+test.after.always("Delete user", async function () {
+    try {
+        let res = await userService.deleteUser(TEST_USER);
+        expect(res.result.ok).to.be.ok
+    } catch (e) {
+        console.log(e.message);
+        expect(e).to.not.exist;
+    }
+})

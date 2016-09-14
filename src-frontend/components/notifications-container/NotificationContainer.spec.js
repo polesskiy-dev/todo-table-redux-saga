@@ -15,7 +15,9 @@ describe("Notification container content", function () {
      */
     const renderNotificationsContainer = (initialState = Map({
         "errors": List(),
-        "openedConnectionsAmount": 0
+        "dataPending": Map({
+            openedConnectionsAmount: 0
+        })
     })) => {
         //construct mock store
         const mockStore = configureStore();
@@ -37,7 +39,9 @@ describe("Notification container content", function () {
         const notificationsContainer = renderNotificationsContainer(
             Map({
                 "errors": List(),
-                "openedConnectionsAmount": 1
+                "dataPending": Map({
+                    openedConnectionsAmount: 1
+                })
             }));
         const loadingSpinnerSpan = TestUtils.findRenderedDOMComponentWithTag(notificationsContainer, 'span');
         chai.expect(loadingSpinnerSpan.className).to.not.have.string(styles.hide);

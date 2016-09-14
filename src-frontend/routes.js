@@ -4,6 +4,7 @@ import App from './components/App'
 import AuthForm from './components/auth-form/AuthForm'
 import TodoPage from './components/toddo-app/TodoPage'
 import About from './components/about/About'
+import RegistrationForm from './components/auth-form/RegistrationForm'
 import * as authUtils from './utils/auth-utils'
 
 /**
@@ -23,4 +24,5 @@ export const routes =
         <Route path='auth' component={AuthForm}/>
         <Route path='todo-app' component={TodoPage} onEnter={enterToAuthRequiredRoute}/>
         <Route path='about' component={About} onEnter={enterToAuthRequiredRoute}/>
+        <Route path='registration' component={RegistrationForm} onEnter={enterToAuthRequiredRoute}/>
     </Route>

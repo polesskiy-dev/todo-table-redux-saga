@@ -8,8 +8,8 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 
-@reduxForm({form:'contact'})
-export default class ContactForm extends Component {
+@reduxForm({form: 'registration'})
+export default class RegistrationForm extends Component {
     render() {
         const {handleSubmit} = this.props;
         return (
@@ -31,7 +31,6 @@ export default class ContactForm extends Component {
         );
     }
 }
-
 
 
 // // Decorate the form component

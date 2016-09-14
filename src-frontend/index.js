@@ -19,19 +19,27 @@ import * as AuthActions from './actions/auth-actions'
 import dataPending from './reducers/data-pending-reducer'
 import errors from './reducers/errors-reducer'
 import todos from './reducers/todos-reducer'
+import authorization from './reducers/authorization-reducer'
 
 /**combine reducers*/
 const reducer = combineReducers({
     todos,
     errors,
     dataPending,
+    authorization,
     form: formReducer     // <---- Mounted at 'form'
 });
 
 const initialState = Map({
     todos: List(),
     errors: List(),
-    dataPending: Map({openedConnectionsAmount: 0}),
+    dataPending: Map({
+        openedConnectionsAmount: 0
+    }),
+    authorization: Map({
+        authToken: "",
+        username: ""
+    }),
     form: {}
 });
 

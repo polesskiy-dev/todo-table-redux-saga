@@ -6,7 +6,7 @@ import styles from './NotificationsContainer.less'
 const mapStateToProps = (state) => {
     return {
         errors: state.get('errors'),
-        openedConnectionsAmount: state.get('openedConnectionsAmount')
+        openedConnectionsAmount: state.get('dataPending').get('openedConnectionsAmount')
     }
 };
 

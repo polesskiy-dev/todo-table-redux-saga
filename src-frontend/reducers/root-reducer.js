@@ -1,8 +1,7 @@
 import {Map, List} from 'immutable'
 import * as types from '../constants/action-types'
-const initialTodosState = Map();
 
-const rootReducer = (state = initialTodosState, action) => {
+export const rootReducer = (state = {}, action) => {
     switch (action.type) {
         /** POST todo */
         case types.POST_TODO_SUCCESS:

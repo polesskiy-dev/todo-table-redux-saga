@@ -4,22 +4,35 @@
 "use strict";
 import React from 'react'
 import {render} from 'react-dom'
-import {Router, browserHistory/*, hashHistory*/} from 'react-router'
+import {Router, browserHistory} from 'react-router'
 import {createStore, applyMiddleware} from 'redux'
+import {combineReducers} from 'redux-immutable';
 import {Provider} from 'react-redux'
 import {Map, List} from 'immutable'
 import createSagaMiddleware from 'redux-saga'
+import {reducer as formReducer} from 'redux-form'
 import createLogger from 'redux-logger'
-import reducer from './reducers/root-reducer'
+
 import rootSaga from './sagas/root-saga'
 import {routes} from './routes'
 import * as AuthActions from './actions/auth-actions'
+import dataPending from './reducers/data-pending-reducer'
+import errors from './reducers/errors-reducer'
+import todos from './reducers/todos-reducer'
+
+/**combine reducers*/
+const reducer = combineReducers({
+    todos,
+    errors,
+    dataPending,
+    form: formReducer     // <---- Mounted at 'form'
+});
 
 const initialState = Map({
     todos: List(),
     errors: List(),
-    userName: "",
-    openedConnectionsAmount: 0,
+    dataPending: Map({openedConnectionsAmount: 0}),
+    form: {}
 });
 
 // create the saga middleware
@@ -29,6 +42,9 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware, createLogger()));
 
 sagaMiddleware.run(rootSaga);
+
+//debug, log initial state
+//console.log(store.getState().toJS());
 
 /* try to login*/
 store.dispatch(AuthActions.loginStart());

@@ -32,6 +32,7 @@
     "joi-browser": "^9.0.4",
     "jsonwebtoken": "^7.1.9",
     "moment": "^2.14.1",
+    "mongoose": "^4.6.0",
     "morgan": "~1.7.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
@@ -106,15 +107,6 @@
     "style-loader": "^0.13.1",
     "supertest": "^2.0.0",
     "webpack": "^1.8.4"
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0"
-    ],
-    "plugins": [
-      "transform-runtime"
-    ]
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",

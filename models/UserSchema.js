@@ -75,11 +75,14 @@ function bcryptPassword(next) {
 };
 UserSchema.pre('save', bcryptPassword);
 
-/**
- * Password comparing.
- * @param {password}
- * @user {password}
- */
-UserSchema.methods.comparePasswords = ({password:pass1}, {password:pass2}) => bcrypt.compareSync(pass1, pass2);
+// /**
+//  * Password comparing.
+//  * @param candidatePassword
+//  */
+// UserSchema.methods.comparePasswords = function (candidatePassword) {
+//     const result = bcrypt.compareSync(candidatePassword, this.password);
+//     console.warn("This from password comparing: %s, result: %s", this, result);
+//     return result
+// }
 
 module.exports = mongoose.model('User', UserSchema);

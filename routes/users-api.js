@@ -15,7 +15,7 @@ router.get('/', function (req, res) {
         .then(users=>users
             ? res.json(users)
             : res.sendStatus(HttpStatus.NO_CONTENT))
-        .catch(err=>res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({err}))
+        .catch(err=>res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err))
 });
 
 /**
@@ -27,7 +27,7 @@ router.get('/:login', function (req, res) {
         .then(user=>user
             ? res.json(user)
             : res.sendStatus(HttpStatus.NO_CONTENT))
-        .catch(err=>res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({err}))
+        .catch(err=>res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err))
 });
 
 
@@ -40,7 +40,7 @@ router.post('/', function (req, res) {
             ? res.status(HttpStatus.CREATED).json(user)
             : res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR))
         .catch(err=>(err.name === "ValidationError")
-            ? res.status(HttpStatus.BAD_REQUEST).send({err: err.errors})
+            ? res.status(HttpStatus.BAD_REQUEST).send(err.errors)
             : res.status(HttpStatus.CONFLICT).send({err})
         )
 });
@@ -54,7 +54,7 @@ router.put('/:login', function (req, res) {
         .then(user=>user
             ? res.json(user)
             : res.sendStatus(HttpStatus.BAD_REQUEST))
-        .catch(err=>res.status(HttpStatus.CONFLICT).send({err}))
+        .catch(err=>res.status(HttpStatus.CONFLICT).send(err))
 });
 
 /**
@@ -64,7 +64,7 @@ router.delete('/:login', function (req, res) {
     const {login} = req.params;
     userService.deleteUser({login})
         .then(res.end())
-        .catch(err=>res.status(HttpStatus.BAD_REQUEST).send({err}))
+        .catch(err=>res.status(HttpStatus.BAD_REQUEST).send(err))
 });
 
 module.exports = router;

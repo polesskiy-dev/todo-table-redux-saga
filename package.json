@@ -7,8 +7,9 @@
     "prestart": "npm run compile-frontend",
     "start": "node ./bin/www",
     "start:server": "node ./bin/www",
-    "test": "karma start karma.conf.js",
-    "test:server": "mocha",
+    "test": "test:server && test:frontend",
+    "test:frontend": "karma start karma.conf.js",
+    "test:server": "mocha spec -c --require babel-register",
     "test:jest": "jest --verbose"
   },
   "dependencies": {

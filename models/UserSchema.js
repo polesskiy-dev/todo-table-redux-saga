@@ -49,8 +49,7 @@ UserSchema.pre('validate', function (next) {
 });
 
 /**
- * bcrypt middleware for User.
- * Hash password.
+ * bcrypt pre hook password hashing.
  *
  * Performing before saving User to DB,
  * automatically hash the password before it’s saved to the database.
@@ -84,6 +83,6 @@ UserSchema.pre('save', function (next) {
  * @param {password}
  * @user {password}
  */
-UserSchema.statics.comparePasswords = ({password:pass1}, {password:pass2}) => bcrypt.compareSync(pass1, pass2);
+UserSchema.methods.comparePasswords = ({password:pass1}, {password:pass2}) => bcrypt.compareSync(pass1, pass2);
 
 module.exports = mongoose.model('User', UserSchema);

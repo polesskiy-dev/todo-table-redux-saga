@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const HttpStatus = require('http-status-codes');
 const {jwtSecret} = require('../config/auth.config.json');
 const userService = require('../services/UserService');
-//const UserSchema = require('../models/UserSchema');
+//const UserModel = require('../models/UserModel');
 
 /**
  * Fetch user from DB by encoded token.

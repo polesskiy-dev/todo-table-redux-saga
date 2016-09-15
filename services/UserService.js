@@ -1,5 +1,5 @@
 const assert = require('assert');
-const UserSchema = require('../models/UserSchema');
+const UserModel = require('../models/UserSchema');
 const mongoose = require('mongoose');
 // Use native promises
 mongoose.Promise = global.Promise;
@@ -14,7 +14,7 @@ class UserService {
      */
     saveUser(newUser) {
         assert.ok(newUser);
-        const userSchemaInstance = new UserSchema(newUser);
+        const userSchemaInstance = new UserModel(newUser);
         return userSchemaInstance.save();
     }
 
@@ -28,7 +28,7 @@ class UserService {
         const {_id, login} = userSelector;
         assert.ok(_id || login, newUser);
 
-        return UserSchema.findOneAndUpdate(_id ? {_id} : {login}, newUser, {new: true});
+        return UserModel.findOneAndUpdate(_id ? {_id} : {login}, newUser, {new: true});
     }
 
     /**
@@ -41,7 +41,7 @@ class UserService {
         const {_id, login} = userSelector;
         assert.ok(_id || login);
 
-        return UserSchema.remove(_id ? {_id} : {login})
+        return UserModel.remove(_id ? {_id} : {login})
     }
 
 
@@ -55,7 +55,7 @@ class UserService {
         const {_id, login, email} = userSelector;
         assert.ok(_id || login || email);
 
-        return UserSchema.findOne(_id ? {_id} : (login ? {login} : {email}));
+        return UserModel.findOne(_id ? {_id} : (login ? {login} : {email}));
     }
 
     /**
@@ -64,7 +64,7 @@ class UserService {
      * @returns Promise
      */
     getAllUsers() {
-        return UserSchema.find({});
+        return UserModel.find({});
     }
 }
 

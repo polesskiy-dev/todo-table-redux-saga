@@ -49,13 +49,9 @@ UserSchema.pre('validate', function (next) {
 });
 
 /**
- * bcrypt pre hook password hashing.
- *
- * Performing before saving User to DB,
- * automatically hash the password before it’s saved to the database.
+ * bcrypt password hashing.
  */
-"use strict";
-UserSchema.pre('save', function (next) {
+function bcryptPassword(next) {
     let user = this;
 
     // only hash the password if it has been modified (or is new)
@@ -76,7 +72,8 @@ UserSchema.pre('save', function (next) {
     } else {
         next();
     }
-});
+};
+UserSchema.pre('save', bcryptPassword);
 
 /**
  * Password comparing.

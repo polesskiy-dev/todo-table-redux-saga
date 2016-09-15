@@ -20,7 +20,6 @@ const userService = require('../services/UserService');
  */
 module.exports = function (req, res, next) {
     const clientAuthToken = req.headers.authorization;
-    //console.log("Auth token from client:%s", clientAuthToken);
 
     try {
         if (!clientAuthToken) throw "No client auth token";

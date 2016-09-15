@@ -1,9 +1,7 @@
 const assert = require('assert');
 const UserModel = require('../models/UserSchema');
-const mongoose = require('mongoose');
-// Use native promises
-mongoose.Promise = global.Promise;
-mongoose.set('debug', true);
+
+//mongoose.set('debug', true);
 
 class UserService {
     /**
@@ -25,6 +23,7 @@ class UserService {
      * @returns Promise
      */
     replaceUser(userSelector, newUser) {
+        //TODO: fix password updating
         const {_id, login} = userSelector;
         assert.ok(_id || login, newUser);
 

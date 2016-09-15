@@ -1,8 +1,8 @@
 "use strict";
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const {roles, salt} = require('../config/auth.config.json');
-
 
 /**
  * User schema.
@@ -42,9 +42,8 @@ var UserSchema = new mongoose.Schema({
 UserSchema.pre('validate', function (next) {
     const [USER_ROLE] = roles;
 
-    let user = this;
     /** set user role as default - USER */
-    user.role = USER_ROLE;
+    this.role = USER_ROLE;
     next();
 });
 
@@ -52,28 +51,41 @@ UserSchema.pre('validate', function (next) {
  * bcrypt password hashing.
  */
 function bcryptPassword(next) {
-    let user = this;
+    const user = this;
 
     // only hash the password if it has been modified (or is new)
-    if (this.isModified('password') || this.isNew) {
+    if (user.isModified('password') || user.isNew) {
         //generate salt
         bcrypt.genSalt(salt, function (err, salt) {
             if (err) return next(err);
 
             // hash the password along with our new salt
-            bcrypt.hash(user.password, salt, function (err, hash) {
-                if (err) return next(err);
+            bcrypt.hash(user.password, salt,
+                (err, hash) => {
+                    if (err) return next(err);
 
-                // override the plain text password with the hashed one
-                user.password = hash;
-                next();
-            });
+                    // override the plain text password with the hashed one
+                    user.password = hash;
+                    next();
+                });
         });
     } else {
         next();
     }
-};
+}
 UserSchema.pre('save', bcryptPassword);
+
+/**
+ * Add jwt token as field to user
+ *
+ * @param jwtSecret
+ * @returns {Object} user
+ */
+UserSchema.methods.addJwtToken = function (jwtSecret) {
+    const {_doc} =this;
+    _doc.token = jwt.sign(_doc, jwtSecret);
+    return this;
+};
 
 // /**
 //  * Password comparing.

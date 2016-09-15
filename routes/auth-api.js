@@ -2,16 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const HttpStatus = require('http-status-codes');
-const jwt = require('jsonwebtoken');
 const userService = require('../services/UserService');
-const UserSchema = require('../models/UserSchema');
 const {jwtSecret} = require('../config/auth.config.json');
-
-const addAuthToken = (user) => {
-    user.token = jwt.sign(user, jwtSecret);
-    return user
-};
-
 
 /**
  * Login
@@ -24,13 +16,13 @@ const addAuthToken = (user) => {
  */
 router.post('/login', function (req, res) {
     const {body:credentials} = req;
-    console.warn("User trying to obtain token with credentials: ", credentials);
+    //console.info("User trying to obtain token with credentials: ", credentials);
 
     if (credentials.login) {
         userService.getUser(credentials)
             .then(user=> {
                     (user && user.password === credentials.password)
-                        ? res.json(addAuthToken(user._doc))
+                        ? res.json(user.addJwtToken(jwtSecret))
                         : res.status(HttpStatus.UNAUTHORIZED).send("Wrong login or password!")
                 }
             )
@@ -53,11 +45,11 @@ router.post('/login', function (req, res) {
  */
 router.post('/sign-up', (req, res)=> {
     const {body} = req;
-    console.warn("User trying to register: ", body);
+    //console.info("User trying to register: ", body);
 
     userService.saveUser(body)
         .then(user=>user
-            ? res.status(HttpStatus.CREATED).json(addAuthToken(user._doc))
+            ? res.status(HttpStatus.CREATED).json(user.addJwtToken(jwtSecret))
             : res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR))
         .catch(err=>(err.name === "ValidationError")
             ? res.status(HttpStatus.BAD_REQUEST).send(err.errors)

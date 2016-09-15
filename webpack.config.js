@@ -24,10 +24,10 @@ module.exports = {
                 test: /\.(js)$/,
                 loader: ['babel-loader'],
                 exclude: /node_modules/,
-                query: {
-                    plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties'],
-                    presets: ['react', 'es2015', 'stage-0', 'airbnb']
-                }
+                // query: {
+                //     plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties'],
+                //     presets: ['react', 'es2015', 'stage-0', 'airbnb']
+                // }
             },
             //LESS
             {

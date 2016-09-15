@@ -1,14 +1,15 @@
 /**
- * User CRUD test
+ * Auth API test
  */
 'use strict';
 const app = require('../app');
 const supertest = require("supertest")(app);
-const {describe, it, before, after} = require('mocha');
+const {describe, it, after} = require('mocha');
 const {expect} = require('chai');
 const HttpStatus = require('http-status-codes');
 const urls = require('../config/urls.config.json');
-let testUser = require('./spec-resources/test-user.json');
+const TEST_ADMIN = require('./spec-resources/test-admin.json');
+const testUser = require('./spec-resources/test-user.json');
 
 describe("Auth API test", ()=> {
     it("Register new user", (done)=> {
@@ -20,8 +21,8 @@ describe("Auth API test", ()=> {
             .expect(({body})=> {
                 /** update password by hashed password from server */
                 testUser.password = body.password;
-                expect(body.token).to.be.not.undefined;
-                expect(body.login).to.be.not.undefined;
+                expect(body.token).to.exist;
+                expect(body.login).to.exist;
             })
             .end(done)
     });
@@ -33,15 +34,16 @@ describe("Auth API test", ()=> {
             .send(testUser)
             .expect(HttpStatus.OK)
             .expect(({body})=> {
-                expect(body.token).to.be.not.undefined;
-                expect(body.login).to.be.not.undefined;
+                expect(body.token).to.exist;
+                expect(body.login).to.exist;
             })
             .end(done)
     });
 
-    after("Delete user", (done)=> {
+    after("Delete user as admin", (done)=> {
         supertest
             .del(`${urls.USERS_API}/${testUser.login}`)
+            .set("Authorization", TEST_ADMIN.token)
             .expect(HttpStatus.OK)
             .end(done);
     });

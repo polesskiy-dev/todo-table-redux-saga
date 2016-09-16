@@ -4,8 +4,18 @@ const {jwtSecret} = require('../config/auth.config.json');
 const userService = require('../services/UserService');
 
 class AuthController {
-    constructor(user) {
-        this.user = user;
+    constructor() {
+        this.user = null;
+        this.allowedRoles = [];
+        this.allowedUsers = [];
+    }
+
+    setAllowedRoles(allowedRoles) {
+        this.allowedRoles = allowedRoles;
+    }
+
+    setAllowedUsers(allowedUsers) {
+        this.allowedUsers = allowedUsers
     }
 
     fetchUserByToken(token) {
@@ -26,7 +36,7 @@ class AuthController {
 
     authMiddleware(req, res, next) {
         const {authorization} = req.headers;
-        
+
         this.fetchUserByToken(authorization)
             .then(()=> {
                 req.user = this.user;
@@ -36,6 +46,6 @@ class AuthController {
     }
 }
 
-const authControllerSingleton = new AuthController();
+//const authControllerSingleton = new AuthController();
 
-module.exports = authControllerSingleton;
+module.exports = AuthController;

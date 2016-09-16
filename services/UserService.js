@@ -12,8 +12,8 @@ class UserService {
      */
     saveUser(newUser) {
         assert.ok(newUser);
-        const userSchemaInstance = new UserModel(newUser);
-        return userSchemaInstance.save();
+        const userModel = new UserModel(newUser);
+        return userModel.save();
     }
 
     /**

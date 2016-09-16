@@ -1,7 +1,7 @@
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1N2RhYWI4ZDFiMTIxNDMxYzk4OGM3N2MiLCJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJGRtT2JTMUlra01yUFV6eTlkWFlpdnVIUU9QMGdXRjBNZVdvZGg1a2dCb1VQRHMyMU5ORzBDIiwibG9naW4iOiJhZG1pbiIsInJvbGUiOiJ1c2VyIiwiX192IjowLCJpYXQiOjE0NzM5NDg1NTh9.40jk1wH2TmkDQE-XQ_SpAaEjosVvIFSa8K97dO6IxEk",
   "__v": 0,
-  "role": "user",
+  "role": "admin",
   "login": "admin",
   "password": "admin",
   "email": "admin@email.com"

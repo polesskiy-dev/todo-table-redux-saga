@@ -1,51 +1,105 @@
+"use strict";
 const jwt = require('jsonwebtoken');
 const HttpStatus = require('http-status-codes');
 const {jwtSecret} = require('../config/auth.config.json');
 const userService = require('../services/UserService');
 
 class AuthController {
-    constructor() {
+    constructor(allowedRoles = [], allowedLogins = [], fetchUser = userService.getUser) {
         this.user = null;
-        this.allowedRoles = [];
-        this.allowedUsers = [];
-    }
-
-    setAllowedRoles(allowedRoles) {
+        this.fetchUser = fetchUser;
         this.allowedRoles = allowedRoles;
+        this.allowedLogins = allowedLogins;
     }
 
-    setAllowedUsers(allowedUsers) {
-        this.allowedUsers = allowedUsers
+    static getInstance() {
+        return new AuthController()
     }
 
-    fetchUserByToken(token) {
-        /**decode jwt token*/
-        const decodedUser = jwt.verify(token, jwtSecret);
-        if (!decodedUser) throw "Invalid auth token";
-        return userService.getUser(decodedUser)
-            .then(
-                user=> {
-                    //if user exists and his password from jwt token and actual password matches
-                    if (user && user.password === decodedUser.password) {
-                        this.user = user;
+    /**
+     * Check user permissions
+     *
+     * @param user
+     * @returns {boolean}
+     */
+    checkPermissions(user) {
+        let result = false;
+
+        //if allowed roles not empty and user role includes in allowed roles
+        if (this.allowedRoles.length != 0)
+            result = result || this.allowedRoles.includes(user.role);
+
+        //if allowed logins not empty and user login includes in allowed logins
+        if (this.allowedLogins.length != 0)
+            result = result || this.allowedLogins.includes(user.login);
+
+        return result
+    }
+
+    /**
+     * Add roles to allowed roles
+     *
+     * @returns {AuthController}
+     */
+    allowRoles() {
+        this.allowedRoles = Array.from(arguments);
+        return this
+    }
+
+    /**
+     * Add logins to allowed logins
+     *
+     * @returns {AuthController}
+     */
+    allowLogins() {
+        this.allowedLogins = Array.from(arguments);
+        return this
+    }
+
+    /**
+     * Get and validate user by token from injected service method
+     *
+     * @param token
+     * @returns {Promise}
+     */
+    getUserByToken(token) {
+        return new Promise((resolve, reject)=> {
+            if (!token) reject("No token!");
+
+            /** decode jwt token*/
+            const decodedUser = jwt.verify(token, jwtSecret);
+            if (!decodedUser) reject("Invalid auth token or unverified");
+
+            /** fetch actual user */
+            this.fetchUser(decodedUser)
+                .then(
+                    user=> {
+                        /** check that user exists and passwords equals*/
+                        if (user && user.validatePassword(decodedUser.password)) {
+                            this.user = user;
+                            resolve();
+                        }
+                        else reject("Wrong login or password")
                     }
-                    else throw "Wrong login or password"
-                }
-            )
+                )
+        });
     }
 
     authMiddleware(req, res, next) {
-        const {authorization} = req.headers;
+        const token = req.headers.authorization;
 
-        this.fetchUserByToken(authorization)
+        this.getUserByToken(token)
             .then(()=> {
-                req.user = this.user;
-                next();
+                /**check user permissions*/
+                if (this.checkPermissions(this.user)) {
+                    req.user = this.user;
+                    next();
+                }
+                else
+                    res.status(HttpStatus.FORBIDDEN).end()
             })
             .catch(err=>res.status(HttpStatus.UNAUTHORIZED).send(err))
     }
 }
-
-//const authControllerSingleton = new AuthController();
 
 module.exports = AuthController;

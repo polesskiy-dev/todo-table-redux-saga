@@ -11,6 +11,7 @@ mongoose.Promise = global.Promise;
 const urls = require('./config/urls.config.json');
 const checkJwtAuth = require('./middleware/check-jwt-token-middleware');
 
+
 var app = express();
 
 // view engine setup
@@ -28,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(urls.AUTH_API, require('./routes/auth-api'));
 app.use(urls.TODOS_API, [checkJwtAuth], require('./routes/todos-api'));
-app.use(urls.USERS_API, [checkJwtAuth], require('./routes/users-api'));
+app.use(urls.USERS_API, require('./routes/users-api'));
 
 /** connect to DB*/
 require('./utils/database-connect')();

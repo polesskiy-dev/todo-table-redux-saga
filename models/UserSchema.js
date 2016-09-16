@@ -34,6 +34,44 @@ var UserSchema = new mongoose.Schema({
     }
 });
 
+/* methods */
+
+/**
+ * Hash value
+ *
+ * @param val
+ * @returns {string} - hashed value
+ */
+UserSchema.methods.generateHash = function (val) {
+    return bcrypt.hashSync(val, bcrypt.genSaltSync(salt), null);
+};
+
+
+/**
+ * Validate candidate password with actual user password
+ *
+ * @param candidatePassword
+ * @returns {boolean}
+ */
+UserSchema.methods.validatePassword = function (candidatePassword) {
+    return candidatePassword === this.password
+    //return bcrypt.compareSync(candidatePassword, this.password);
+};
+
+/**
+ * Add jwt token as field to user
+ *
+ * @param jwtSecret
+ * @returns {Object} user
+ */
+UserSchema.methods.addJwtToken = function (jwtSecret) {
+    const {_doc} =this;
+    _doc.token = jwt.sign(_doc, jwtSecret);
+    return this;
+};
+
+/* hooks */
+
 /**
  * Actions performing before VALIDATION of user fields.
  *
@@ -48,53 +86,16 @@ UserSchema.pre('validate', function (next) {
 });
 
 /**
- * bcrypt password hashing.
+ * Hash password before saving (not works fro updating)
  */
-function bcryptPassword(next) {
-    const user = this;
-
-    // only hash the password if it has been modified (or is new)
-    if (user.isModified('password') || user.isNew) {
-        //generate salt
-        bcrypt.genSalt(salt, function (err, salt) {
-            if (err) return next(err);
-
-            // hash the password along with our new salt
-            bcrypt.hash(user.password, salt,
-                (err, hash) => {
-                    if (err) return next(err);
-
-                    // override the plain text password with the hashed one
-                    user.password = hash;
-                    next();
-                });
-        });
-    } else {
-        next();
+UserSchema.pre('save', function (next) {
+    try {
+        this.password = this.generateHash(this.password);
     }
-}
-UserSchema.pre('save', bcryptPassword);
-
-/**
- * Add jwt token as field to user
- *
- * @param jwtSecret
- * @returns {Object} user
- */
-UserSchema.methods.addJwtToken = function (jwtSecret) {
-    const {_doc} =this;
-    _doc.token = jwt.sign(_doc, jwtSecret);
-    return this;
-};
-
-// /**
-//  * Password comparing.
-//  * @param candidatePassword
-//  */
-// UserSchema.methods.comparePasswords = function (candidatePassword) {
-//     const result = bcrypt.compareSync(candidatePassword, this.password);
-//     console.warn("This from password comparing: %s, result: %s", this, result);
-//     return result
-// }
+    catch (e) {
+        next(e)
+    }
+    next();
+});
 
 module.exports = mongoose.model('User', UserSchema);

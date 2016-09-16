@@ -29,7 +29,7 @@ module.exports = function (req, res, next) {
             .then(
                 user=> {
                     //if user exists and his password from jwt token and actual password matches
-                    if (user && user.password === decodedUser.password) {
+                    if (user && user.validatePassword(decodedUser.password)) {
                         /**set user as a req parameter and call next middleware*/
                         req.user = user;
                         next();
@@ -41,11 +41,11 @@ module.exports = function (req, res, next) {
             .catch(
                 err=> {
                     console.error("While fetching user for JWT check: ", err);
-                    res.status(HttpStatus.UNAUTHORIZED).end()
+                    res.status(HttpStatus.UNAUTHORIZED).send(err)
                 }
             )
     } catch (e) {
         console.error(e);
-        res.status(HttpStatus.UNAUTHORIZED).end();
+        res.status(HttpStatus.UNAUTHORIZED).send(e);
     }
 };

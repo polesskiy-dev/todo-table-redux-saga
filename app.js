@@ -11,7 +11,6 @@ mongoose.Promise = global.Promise;
 const urls = require('./config/urls.config.json');
 const checkJwtAuth = require('./middleware/check-jwt-token-middleware');
 
-
 var app = express();
 
 // view engine setup
@@ -33,6 +32,10 @@ app.use(urls.USERS_API, require('./routes/users-api'));
 
 /** connect to DB*/
 require('./utils/database-connect')();
+
+/** event emitter test*/
+const userService = require('./services/UserService');
+userService.on("users-list-changed", ()=>console.log("Users list changed"));
 
 // handle every other route with index.html, which will contain
 // a script tag to your application's JavaScript file(s).

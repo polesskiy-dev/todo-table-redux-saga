@@ -7,13 +7,13 @@ const router = express.Router();
 const HttpStatus = require('http-status-codes');
 const userService = require('../services/UserService');
 const AuthController = require('../controllers/AuthController');
-const [USER_ROLE, ADMIN_ROLE] = require('../config/auth.config.json').roles;
+const [, ADMIN_ROLE] = require('../config/auth.config.json').roles;
 
 /**
  * POST create new user
  */
 router.post('/',
-    (req, res, next)=>AuthController.getInstance().allowRoles(ADMIN_ROLE).authMiddleware(req, res, next),
+    (req, res, next) =>AuthController.getInstance().allowRoles(ADMIN_ROLE).authMiddleware(req, res, next),
     function (req, res) {
         userService.saveUser(req.body)
             .then(user=>user

@@ -41,6 +41,7 @@ class AuthController {
      *
      * @returns {AuthController}
      */
+
     allowRoles() {
         this.allowedRoles = Array.from(arguments);
         return this

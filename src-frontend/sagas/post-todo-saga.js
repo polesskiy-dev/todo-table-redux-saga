@@ -4,7 +4,7 @@ import * as errorActions from '../actions/errors-actions'
 import * as types from '../constants/action-types'
 import {delay} from 'redux-saga'
 import {call, put} from 'redux-saga/effects'
-import * as apiUrls from '../constants/api-urls'
+import urls from '../../config/urls.config'
 import * as httpUtils from '../utils/http-utils'
 
 /**
@@ -20,7 +20,7 @@ export default function* postTodoSaga(action) {
         yield put({type: types.DATA_PENDING_START});
 
         //POST todo to server
-        const todo = yield call(httpUtils.post, apiUrls.TODOS_API, action.payload.todo);
+        const todo = yield call(httpUtils.post, urls.TODOS_API, action.payload.todo);
 
         //dispatch new todo from server
         yield put(todoActions.postTodoSuccess(todo));

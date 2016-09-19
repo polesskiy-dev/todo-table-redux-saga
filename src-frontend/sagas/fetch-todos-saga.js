@@ -4,7 +4,7 @@ import * as errorActions from '../actions/errors-actions'
 import * as types from '../constants/action-types'
 import {delay} from 'redux-saga'
 import {call, put} from 'redux-saga/effects'
-import * as apiUrls from '../constants/api-urls'
+import urls from '../../config/urls.config'
 import * as httpUtils from '../utils/http-utils'
 
 /**
@@ -18,7 +18,7 @@ export default function* fetchTodosSaga() {
         yield put({type: types.DATA_PENDING_START});
 
         //fetch todosApi from server
-        const todos = yield call(httpUtils.get, apiUrls.TODOS_API);
+        const todos = yield call(httpUtils.get, urls.TODOS_API);
 
         console.log("fetchTodosSaga: fetched todosApi: ", todos);
 

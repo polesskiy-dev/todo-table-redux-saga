@@ -7,14 +7,14 @@ const supertest = require("supertest")(app);
 const {describe, it, after} = require('mocha');
 const {expect} = require('chai');
 const HttpStatus = require('http-status-codes');
-const urls = require('../config/urls.config.json');
+const urls = require('../config/urls.config');
 const TEST_ADMIN = require('./spec-resources/test-admin.json');
 const testUser = require('./spec-resources/test-user.json');
 
 describe("Auth API test", ()=> {
     it("Register new user", (done)=> {
         supertest
-            .post(urls.AUTH_API + "/sign-up")
+            .post(urls.AUTH_API + "/" + urls.REGISTRATION)
             .set("Content-Type", "application/json")
             .send(testUser)
             .expect(HttpStatus.CREATED)
@@ -29,7 +29,7 @@ describe("Auth API test", ()=> {
 
     it("Login as user", (done)=> {
         supertest
-            .post(urls.AUTH_API + "/login")
+            .post(urls.AUTH_API + "/" + urls.LOGIN)
             .set("Authorization", "application/json")
             .send(testUser)
             .expect(HttpStatus.OK)

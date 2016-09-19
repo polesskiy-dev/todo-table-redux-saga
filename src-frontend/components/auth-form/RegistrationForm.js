@@ -6,62 +6,67 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Field, reduxForm} from 'redux-form';
+import {Field, reduxForm, SubmissionError} from 'redux-form';
 import {connect} from 'react-redux'
 import * as Actions from '../../actions/auth-actions'
 
 const mapDispatchToProps = (dispatch) => ({
-    register: (credentials, rememberMeFlag) => dispatch(Actions.registerStart(credentials, rememberMeFlag))
+    register: (credentials) => dispatch(Actions.registerStart(credentials))
 });
 
 @connect(null, mapDispatchToProps)
-@reduxForm({form: 'registration'})
+@reduxForm({
+    form: 'registrationForm'
+})
 export default class RegistrationForm extends Component {
     constructor(props) {
         super(props);
-        this.handleSubmit = (data)=> {
-            data.preventDefault();
-            console.log("handleSubmit arguments: ", data);
-            //TODO: here must be dispatch registration
+    }
+
+    submit = (values, {login, email, password, passwordConfirm} = values) => {
+        console.log("Form values: ", values);
+        if (password !== passwordConfirm) {
+            throw new SubmissionError({passwordConfirm: 'Passwords doesn\'t match', _error: 'Login failed!'})
+        } else {
+            this.props.register({login, email, password})
         }
     }
 
+
     render() {
-        const {handleSubmit} = this;
+        const {error, handleSubmit, submitting} = this.props;
         return (
-            <form onSubmit={handleSubmit} className="col-md-4 col-md-offset-4">
+            <form onSubmit={handleSubmit(this.submit)} className="col-md-4 col-md-offset-4">
                 <fieldset>
-                    <div className="form-group">
-                        <label htmlFor="login">Last Name</label>
-                        <Field name="login" component={renderInput} type="text"/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Last Name</label>
-                        <Field name="password" component={renderInput} type="password"/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="confirmPassword">Last Name</label>
-                        <Field name="confirmPassword" component={renderInput} type="password"/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <Field name="email" component={renderInput} type="email"/>
-                    </div>
-                    <button className="btn btn-default" type="submit">Submit</button>
+                    <Field name="login" label="Login" type="text" component={renderField}/>
+                    <Field name="email" label="E-mail" type="email" component={renderField}/>
+                    <Field name="password" label="Password" type="password" component={renderField}/>
+                    <Field name="passwordConfirm" label="Confirm password" type="password" component={renderField}/>
+                    {error && <strong>{error}</strong>}
                 </fieldset>
+                <button className="btn btn-default" type="submit" disabled={submitting}>Submit</button>
             </form>
         );
     }
 }
 
-const renderInput = field =>   // Define stateless component to render input and errors
-    <div>
-        <input className="form-control" {...field.input} type={field.type}/>
+
+const renderField = (values) =>   // Define stateless component to render input and errors
+    <div className="form-group">
+        <label>{values.label}</label>
+        <div>
+            <input className="form-control"
+                   {...values.input}
+                   value={values.value}
+                   type={values.type}
+                   placeholder={values.label}
+            />
+            {values.touched && values.error && <span>{values.error}</span>}
+        </div>
     </div>
 
-
-// Decorate the form component
-// ContactForm = reduxForm({
-//     form: 'contact' // a unique name for this form
-// })(ContactForm);
+// // Decorate the form component
+// export default reduxForm({
+//     form: 'registrationForm' // a unique name for this form
+// })(RegistrationForm);
 

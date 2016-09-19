@@ -7,7 +7,7 @@ const supertest = require("supertest")(app);
 const {describe, it, before, after} = require('mocha');
 const {expect} = require('chai');
 const HttpStatus = require('http-status-codes');
-const urls = require('../config/urls.config.json');
+const urls = require('../config/urls.config');
 const TEST_USER = require('./spec-resources/test-user.json');
 const TEST_ADMIN = require('./spec-resources/test-admin.json');
 

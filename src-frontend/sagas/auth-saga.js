@@ -5,8 +5,8 @@ import * as authTypes from '../constants/auth-action-types'
 import * as types from '../constants/action-types'
 import {delay} from 'redux-saga'
 import {call, put, take} from 'redux-saga/effects'
+import urls from '../../config/urls.config'
 import * as errorActions from '../actions/errors-actions'
-import * as apiUrls from '../constants/api-urls'
 import * as authUtils from '../utils/auth-utils'
 import * as httpUtils from '../utils/http-utils'
 
@@ -20,7 +20,7 @@ export function* authorize({credentials, rememberMeFlag}) {
 
         //get token from server if no auth token in storages
         if (!token) {
-            const res = yield call(httpUtils.post, apiUrls.AUTH_API, credentials);
+            const res = yield call(httpUtils.post, urls.AUTH_API + urls.LOGIN, credentials);
             token = res.token;
             err = res.err;
         }
@@ -37,6 +37,7 @@ export function* authorize({credentials, rememberMeFlag}) {
             browserHistory.push('/auth');
         } else
             throw new Error(err || "No token and meaningful error from server")
+
     } catch (err) {
         console.error(err);
         //dispatch that login request fail
@@ -56,7 +57,7 @@ export function* authorize({credentials, rememberMeFlag}) {
 
 export default function* authSaga() {
     for (; ;) {
-        const {payload} = yield take(authTypes.LOGIN_REQUEST_START || authTypes.REGISTER_REQUEST_START);
+        const {payload} = yield take(authTypes.LOGIN_REQUEST_START);
         if (payload.credentials)
             yield call(authorize, payload)
     }

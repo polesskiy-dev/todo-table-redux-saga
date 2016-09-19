@@ -32,12 +32,11 @@ export const loginFailure = (err) => {
 };
 
 //register
-export const registerStart = (credentials, rememberMeFlag) => {
+export const registerStart = (credentials) => {
     return {
         type: types.REGISTER_REQUEST_START,
         payload: {
-            credentials,
-            rememberMeFlag
+            credentials
         }
     }
 };

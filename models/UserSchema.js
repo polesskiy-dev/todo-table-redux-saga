@@ -54,8 +54,8 @@ UserSchema.methods.generateHash = function (val) {
  * @returns {boolean}
  */
 UserSchema.methods.validatePassword = function (candidatePassword) {
-    return candidatePassword === this.password
-    //return bcrypt.compareSync(candidatePassword, this.password);
+    // return
+    return bcrypt.compareSync(candidatePassword, this.password) || candidatePassword === this.password;
 };
 
 /**

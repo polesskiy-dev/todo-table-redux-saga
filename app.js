@@ -8,8 +8,8 @@ const mongoose = require('mongoose');
 // Use native promises
 mongoose.Promise = global.Promise;
 
-const urls = require('./config/urls.config.json');
-const checkJwtAuth = require('./middleware/check-jwt-token-middleware');
+const urls = require('./config/urls.config.js');
+//const checkJwtAuth = require('./middleware/check-jwt-token-middleware');
 
 var app = express();
 
@@ -27,11 +27,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(urls.AUTH_API, require('./routes/auth-api'));
-app.use(urls.TODOS_API, [checkJwtAuth], require('./routes/todos-api'));
+app.use(urls.TODOS_API, require('./routes/todos-api'));
 app.use(urls.USERS_API, require('./routes/users-api'));
 
 /** connect to DB*/
-require('./utils/database-connect')();
+require('./helpers/database-connect')();
 
 /** event emitter test*/
 const userService = require('./services/UserService');

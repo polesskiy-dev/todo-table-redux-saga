@@ -8,7 +8,7 @@ const {describe, it, before, after} = require('mocha');
 const {expect} = require('chai');
 const checkJwtAuth = require('../middleware/check-jwt-token-middleware');
 const HttpStatus = require('http-status-codes');
-const urls = require('../config/urls.config.json');
+const urls = require('../config/urls.config');
 const TEST_USER = require('./spec-resources/test-user.json');
 
 

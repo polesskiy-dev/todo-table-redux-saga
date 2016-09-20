@@ -46,6 +46,7 @@ export default class AuthForm extends Component {
      */
     handleSubmit = (e) => {
         e.preventDefault();
+
         const {isRegistrationForm, login, password, passwordConfirm, email} = this.state;
         const credentials = {
             login: login.value,

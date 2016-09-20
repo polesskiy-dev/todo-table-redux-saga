@@ -24,7 +24,7 @@ export default class NavBar extends Component {
                     <ul className="nav navbar-nav">
                         <li><Link to='/todo-app' activeClassName={styles.active}>Todos</Link></li>
                         <li><Link to='/about' activeClassName={styles.active}>About</Link></li>
-                        <li><Link to='/registration' activeClassName={styles.active}>Registration</Link></li>
+                        <li><Link to='/contact-me' activeClassName={styles.active}>Contact form</Link></li>
                     </ul>
                     <ul className="nav navbar-nav pull-right">
                         <li>

@@ -10,7 +10,6 @@ import {combineReducers} from 'redux-immutable';
 import {Provider} from 'react-redux'
 import {Map, List} from 'immutable'
 import createSagaMiddleware from 'redux-saga'
-import {reducer as reduxFormReducer} from 'redux-form'
 import createLogger from 'redux-logger'
 
 import rootSaga from './sagas/root-saga'
@@ -26,8 +25,7 @@ const reducer = combineReducers({
     todos,
     errors,
     dataPending,
-    authorization,
-    form: reduxFormReducer     // <---- Mounted at 'form'
+    authorization
 });
 
 const initialState = Map({
@@ -39,8 +37,7 @@ const initialState = Map({
     authorization: Map({
         authToken: "",
         username: ""
-    }),
-    form: reduxFormReducer
+    })
 });
 
 // create the saga middleware

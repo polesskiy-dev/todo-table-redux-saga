@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const HttpStatus = require('http-status-codes');
-const userService = require('../services/UserService');
+const UserService = require('../services/UserService');
 const {jwtSecret} = require('../config/auth.config.json');
 const urls = require('../config/urls.config');
 
@@ -20,7 +20,7 @@ router.post(urls.LOGIN, function (req, res) {
     console.info("User trying to obtain token with credentials: ", credentials);
 
     if (credentials.login) {
-        userService.getUser(credentials)
+        UserService.instance.getUser(credentials)
             .then(user=> {
                     (user && user.validatePassword(credentials.password))
                         ? res.json(user.addJwtToken(jwtSecret))
@@ -48,7 +48,7 @@ router.post(urls.REGISTRATION, (req, res)=> {
     const {body} = req;
     //console.info("User trying to register: ", body);
 
-    userService.saveUser(body)
+    UserService.instance.saveUser(body)
         .then(user=>user
             ? res.status(HttpStatus.CREATED).json(user.addJwtToken(jwtSecret))
             : res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR))

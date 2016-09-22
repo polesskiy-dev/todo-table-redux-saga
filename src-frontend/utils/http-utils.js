@@ -29,7 +29,7 @@ export const post = (url, payload) =>
         .then(res => res.json());
 
 /**
- * GET data from url
+ * GET formFields from url
  * @param url
  */
 export const get = (url) =>

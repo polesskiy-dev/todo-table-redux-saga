@@ -43,7 +43,7 @@ const initialState = Map({
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
-/* create store and init it by initial data, enhance by middleware*/
+/* create store and init it by initial formFields, enhance by middleware*/
 const store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware, createLogger()));
 
 sagaMiddleware.run(rootSaga);
@@ -52,7 +52,7 @@ sagaMiddleware.run(rootSaga);
 store.dispatch(AuthActions.loginStart());
 
 render(
-//Provider allows us to receive data from store of our app (by connect function)
+//Provider allows us to receive formFields from store of our app (by connect function)
     <Provider store={store}>
         <Router history={browserHistory} routes={routes}/>
     </Provider>,

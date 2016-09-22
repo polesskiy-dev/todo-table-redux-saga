@@ -2,10 +2,16 @@ const EventEmitter = require('events');
 const assert = require('assert');
 const UserModel = require('../models/UserSchema');
 
-//mongoose.set('debug', true);
+let userService = null;
 
 class UserService extends EventEmitter {
+    static get instance() {
+        return userService
+    }
+
     constructor() {
+        if (UserService.instance) return UserService.instance;
+
         super();
     }
 
@@ -76,6 +82,7 @@ class UserService extends EventEmitter {
     }
 }
 
-const userServiceSingleton = new UserService();
+userService = new UserService();
+//const userServiceSingleton = new UserService();
 
-module.exports = userServiceSingleton;
+module.exports = UserService;//userServiceSingleton;

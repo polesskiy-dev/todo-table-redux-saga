@@ -5,7 +5,7 @@ const {jwtSecret} = require('../config/auth.config.json');
 const userService = require('../services/UserService');
 
 class AuthController {
-    constructor(allowedRoles = [], allowedLogins = [], fetchUser = userService.getUser) {
+    constructor(allowedRoles = [], allowedLogins = [], fetchUser = userService.instance.getUser) {
         this.user = null;
         this.fetchUser = fetchUser;
         this.allowedRoles = allowedRoles;

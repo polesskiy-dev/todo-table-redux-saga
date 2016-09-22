@@ -34,8 +34,8 @@ app.use(urls.USERS_API, require('./routes/users-api'));
 require('./helpers/database-connect')();
 
 /** event emitter test*/
-const userService = require('./services/UserService');
-userService.on("users-list-changed", ()=>console.log("Users list changed"));
+const UserService = require('./services/UserService');
+UserService.instance.on("users-list-changed", ()=>console.log("Users list changed"));
 
 // handle every other route with index.html, which will contain
 // a script tag to your application's JavaScript file(s).

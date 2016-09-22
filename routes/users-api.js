@@ -5,7 +5,7 @@
 const express = require('express');
 const router = express.Router();
 const HttpStatus = require('http-status-codes');
-const userService = require('../services/UserService');
+const UserService = require('../services/UserService');
 const AuthController = require('../controllers/AuthController');
 const [, ADMIN_ROLE] = require('../config/auth.config.json').roles;
 
@@ -15,7 +15,7 @@ const [, ADMIN_ROLE] = require('../config/auth.config.json').roles;
 router.post('/',
     (req, res, next) =>AuthController.getInstance().allowRoles(ADMIN_ROLE).authMiddleware(req, res, next),
     function (req, res) {
-        userService.saveUser(req.body)
+        UserService.instance.saveUser(req.body)
             .then(user=>user
                 ? res.status(HttpStatus.CREATED).json(user)
                 : res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR))
@@ -31,7 +31,7 @@ router.post('/',
 router.get('/',
     (req, res, next)=>AuthController.getInstance().allowRoles(ADMIN_ROLE).authMiddleware(req, res, next),
     function (req, res) {
-        userService.getAllUsers()
+        UserService.instance.getAllUsers()
             .then(users=>users
                 ? res.json(users)
                 : res.sendStatus(HttpStatus.NO_CONTENT))
@@ -45,7 +45,7 @@ router.get('/:login',
     (req, res, next)=>AuthController.getInstance().allowRoles(ADMIN_ROLE).allowLogins(req.params.login).authMiddleware(req, res, next),
     function (req, res) {
         const {login} = req.params;
-        userService.getUser({login})
+        UserService.instance.getUser({login})
             .then(user=>user
                 ? res.json(user)
                 : res.sendStatus(HttpStatus.NO_CONTENT))
@@ -59,7 +59,7 @@ router.put('/:login',
     (req, res, next)=>AuthController.getInstance().allowRoles(ADMIN_ROLE).allowLogins(req.params.login).authMiddleware(req, res, next),
     function (req, res) {
         const {login} = req.params;
-        userService.replaceUser({login}, req.body)
+        UserService.instance.replaceUser({login}, req.body)
             .then(user=>user
                 ? res.json(user)
                 : res.sendStatus(HttpStatus.BAD_REQUEST))
@@ -73,7 +73,7 @@ router.delete('/:login',
     (req, res, next)=>AuthController.getInstance().allowRoles(ADMIN_ROLE).allowLogins(req.params.login).authMiddleware(req, res, next),
     function (req, res) {
         const {login} = req.params;
-        userService.deleteUser({login})
+        UserService.instance.deleteUser({login})
             .then(res.end())
             .catch(err=>res.status(HttpStatus.BAD_REQUEST).send(err))
     });

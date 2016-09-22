@@ -5,13 +5,13 @@
 require('../app');
 const {describe, it, before, after} = require('mocha');
 const {expect} = require('chai');
-const userService = require('../services/UserService');
+const UserService = require('../services/UserService');
 const TEST_USER = require('./spec-resources/test-user.json');
 
 describe("User service test", ()=> {
         before("Create new user", async function () {
             try {
-                let res = await userService.saveUser(TEST_USER);
+                let res = await UserService.instance.saveUser(TEST_USER);
 
                 expect(res.login).to.equal(TEST_USER.login);
                 expect(res.email).to.equal(TEST_USER.email);
@@ -24,7 +24,7 @@ describe("User service test", ()=> {
 
         it("GET single user", async function () {
             try {
-                let user = await userService.getUser(TEST_USER);
+                let user = await UserService.instance.getUser(TEST_USER);
                 expect(user.login).to.equal(TEST_USER.login);
                 expect(user.email).to.equal(TEST_USER.email);
             } catch (e) {
@@ -35,7 +35,7 @@ describe("User service test", ()=> {
 
         it("GET all users", async function () {
             try {
-                let users = await userService.getAllUsers();
+                let users = await UserService.instance.getAllUsers();
                 expect(users).to.be.not.empty;
             } catch (e) {
                 console.error(e.message);
@@ -45,7 +45,7 @@ describe("User service test", ()=> {
 
         it("PUT replace user", async function () {
             try {
-                let user = await userService.replaceUser(TEST_USER, TEST_USER);
+                let user = await UserService.instance.replaceUser(TEST_USER, TEST_USER);
                 expect(user.login).to.equal(TEST_USER.login);
                 expect(user.email).to.equal(TEST_USER.email);
             } catch (e) {
@@ -56,7 +56,7 @@ describe("User service test", ()=> {
 
         after("Delete user", async function () {
             try {
-                let res = await userService.deleteUser(TEST_USER);
+                let res = await UserService.instance.deleteUser(TEST_USER);
                 expect(res.result.ok).to.be.ok
             } catch (e) {
                 console.log(e.message);

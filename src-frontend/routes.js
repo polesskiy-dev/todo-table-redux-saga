@@ -4,7 +4,7 @@ import App from './components/App'
 import AuthForm from './components/auth-form/AuthForm'
 import TodoPage from './components/toddo-app/TodoPage'
 import About from './components/pages/AboutPage'
-import ContactMePage from './components/pages/ContactMePage'
+import ContactMePage from './components/pages/RegistrationPage'
 import * as authUtils from './utils/auth-utils'
 
 /**

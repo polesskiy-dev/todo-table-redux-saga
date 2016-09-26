@@ -24,14 +24,10 @@ export default class RegistrationPage extends Component {
 
     constructor(props) {
         super(props);
-        const {FIELD_NAMES} = RegistrationPage;
+        //const {FIELD_NAMES} = RegistrationPage;
 
         this.state = {
             formFields: fromJS({
-                [FIELD_NAMES.login]: {},
-                [FIELD_NAMES.password]: {},
-                [FIELD_NAMES.confirmPassword]: {},
-                [FIELD_NAMES.email]: {}
             })
         };
 
@@ -67,21 +63,21 @@ export default class RegistrationPage extends Component {
                             stateChanged={this.childStateChanged}
                             label="Email"
                             type="email"
-                            name={FIELD_NAMES.password}
+                            name={FIELD_NAMES.email}
                         />
                         <InputFormGroup
                             validate={(password)=>Joi.string().min(3).max(15).required().validate(password).error ? false : true}
                             stateChanged={this.childStateChanged}
                             label="Password"
                             type="password"
-                            name={FIELD_NAMES.confirmPassword}
+                            name={FIELD_NAMES.password}
                         />
                         <InputFormGroup
                             validate={(confirmPassword)=> this.state.formFields.get(FIELD_NAMES.password).get('value') === confirmPassword && this.state.formFields.get(FIELD_NAMES.password).get('isValid')}
                             stateChanged={this.childStateChanged}
                             label="Confirm password"
                             type="password"
-                            name={FIELD_NAMES.email}
+                            name={FIELD_NAMES.confirmPassword}
                         />
                         <SelectFormGroup
                             stateChanged={this.childStateChanged}

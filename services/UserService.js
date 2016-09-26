@@ -69,17 +69,7 @@ class UserService extends EventEmitter {
         const {_id, login, email} = userSelector;
         assert.ok(_id || login || email);
 
-        return Promise.resolve(new UserModel({
-            "_id": {
-                "$oid": "57d7d062bc05c01809a6ce9f"
-            },
-            "role": "user",
-            "login": "test",
-            "password": "$2a$10$x3rQ9cqf04kS1tft./wFV.HC86X6zwSPoNQCGe4HkeN86iEBNeNb2",
-            "email": "test-email1@email.com",
-            "__v": 0
-        }))
-        //return UserModel.findOne(_id ? {_id} : (login ? {login} : {email}));
+        return UserModel.findOne(_id ? {_id} : (login ? {login} : {email}));
     }
 
     /**

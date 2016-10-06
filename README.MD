@@ -21,6 +21,19 @@ immutable js, redux-saga, eslint, autoprefixer.
     $ npm install 
     $ npm start
     
+### Docker:
+    
+    #build all by Dockerfile instructions image named as "username/todo-table-redux-saga"
+    $ docker build -t username/todo-table-redux-saga .
+    #run on 8080 port to internal 3000 port with name "todo-table-redux-saga"    
+    $ docker run -name todo-table-redux-saga -p 8080:3000 username/todo-table-redux-saga
+    #stop docker process
+    $ docker stop todo-table-redux-saga
+    #save image 
+    $ docker save username/todo-table-redux-saga:my_tag > todo-table-redux-saga.tar.gz
+    #load image
+    $ docker load < todo-table-redux-saga.tar.gz
+    
 
     
     

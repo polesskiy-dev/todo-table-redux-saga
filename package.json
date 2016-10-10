@@ -5,9 +5,10 @@
   "scripts": {
     "compile-frontend": "webpack --config webpack.config.js --progress --profile",
     "prestart": "npm run compile-frontend",
-    "start": "pm2 flush && pm2 start process.json && pm2 logs",
+    "start": "pm2 flush && pm2 start process.json",
     "stop" : "pm2 stop todo-table-redux-saga && pm2 delete todo-table-redux-saga",
     "start:server": "node ./bin/www",
+    "build:docker-image": "docker build -t iceknight/todo-table-redux-saga .",
     "test": "npm run test:server && npm run test:frontend",
     "test:frontend": "karma start karma.conf.js",
     "test:server": "mocha spec -c --require babel-register",
